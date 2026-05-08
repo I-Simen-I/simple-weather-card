@@ -1,0 +1,6 @@
+{
+  "name": "Simple Weather Card",
+  "homeassistant": "2026.4.0",
+  "render_readme": true,
+  "filename": "simple-weather-card.js"
+}
