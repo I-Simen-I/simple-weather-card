@@ -13,8 +13,7 @@
     "forecast",
     "custom-cards"
   ],
-  "main": "dist/simple-weather-card.js",
-  "repository": "git@github.com:simensohol/simple-weather-card.git",
+"repository": "git@github.com:simensohol/simple-weather-card.git",
   "author": "Simen Søhol",
   "engines": {
     "node": ">=24.11.0"

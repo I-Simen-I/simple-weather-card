@@ -1,6 +1,6 @@
 module.exports = {
   mode: 'production',
-  entry: './src/main.ts',
+  entry: './src/simple-weather-card.ts',
   output: {
     filename: 'simple-weather-card.js'
   },
