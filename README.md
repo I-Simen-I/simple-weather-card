@@ -1,6 +1,6 @@
 # Simple Weather Card
 
-[![](https://img.shields.io/github/release/kalkih/simple-weather-card.svg?style=flat-square)](https://github.com/kalkih/simple-weather-card/releases/latest)
+[![](https://img.shields.io/github/release/I-Simen-I/simple-weather-card.svg?style=flat-square)](https://github.com/I-Simen-I/simple-weather-card/releases/latest)
 
 A minimalistic weather card for [Home Assistant](https://github.com/home-assistant/home-assistant) Lovelace UI, inspired by Google Material Design.
 
