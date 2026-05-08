@@ -6,53 +6,28 @@ A minimalistic weather card for [Home Assistant](https://github.com/home-assista
 
 ![Preview](https://user-images.githubusercontent.com/457678/53588519-61dfdf80-3b8d-11e9-9f0d-f5995ba794ce.png)
 
-## Install
 
-_This card is available in [HACS](https://github.com/custom-components/hacs) (Home Assistant Community Store)_
+## Migration from Original Repository
 
-### Manual install
+If you're migrating from the [original repository](https://github.com/kalkih/simple-weather-card) or any of the older forks:
 
-1. Download and copy `simple-weather-card-bundle.js` from the [latest release](https://github.com/kalkih/simple-weather-card/releases/latest) into your `config/www` directory.
+### Switching to This Fork
 
-2. Add a reference to `simple-weather-card-bundle.js` inside your `ui-lovelace.yaml` or through the raw config editor interface.
+**Via HACS:**
 
-   ```yaml
-   resources:
-     - url: /local/simple-weather-card-bundle.js?v=0.8.5
-       type: module
-   ```
+1. Remove the old integration from HACS.
+2. Add this repository as a custom repository: `https://github.com/I-Simen-I/simple-weather-card`
 
-### CLI install
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=I-Simen-I&repository=simple-thermostat&category=plugin)
 
-1. Move into your `config/www` directory
+3. Install from HACS.
+4. Clear your browser cache after updating.
 
-2. Download `simple-weather-card-bundle.js`
+**Manual:**
 
-   ```console
-   $ wget https://github.com/kalkih/simple-weather-card/releases/download/v0.8.5/simple-weather-card-bundle.js
-   ```
-
-3. Add a reference to `simple-weather-card-bundle.js` inside your `ui-lovelace.yaml` or through the raw config editor gui.
-
-   ```yaml
-   resources:
-     - url: /local/simple-weather-card-bundle.js?v=0.8.5
-       type: module
-   ```
-
-## Updating
-
-1. Find your `simple-weather-card-bundle.js` file in `config/www` or wherever you ended up storing it.
-
-2. Replace the local file with the one found in the [latest release](https://github.com/kalkih/simple-weather-card/releases/latest).
-
-3. Add the new version number to the end of the card reference url in your `ui-lovelace.yaml`. This will prevent the browser from loading the old version from cache.
-
-   ```yaml
-   resources:
-     - url: /local/simple-weather-card-bundle.js?v=0.8.5
-       type: module
-   ```
+1. Download `simple-thermostat.js` from the [latest release](https://github.com/I-Simen-I/simple-weather-card/releases/latest).
+2. Replace the existing file in your `www` folder.
+3. Clear your browser cache.
 
 ## Using the card
 
