@@ -1,6 +1,6 @@
 {
   "name": "simple-weather-card",
-  "version": "0.8.9",
+  "version": "0.9.1",
   "description": "A minimalistic and customizable graph card for Home Assistant Lovelace UI",
   "keywords": [
     "home-assistant",
@@ -14,8 +14,6 @@
     "custom-cards"
   ],
   "main": "src/main.js",
-  "repository": "git@github.com:simensohol/simple-weather-card.git",
-  "author": "Simen Søhol",
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.26.0",

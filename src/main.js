@@ -2,6 +2,7 @@ import WeatherEntity from "./weather";
 import style from "./style";
 import { handleClick } from "./handleClick";
 import { customElement } from "lit/decorators.js";
+import { version} from "./var/version";
 
 const LitElement =
   window.LitElement ||
@@ -233,4 +234,11 @@ window.customCards.push({
   name: 'Simple Weather Card',
   preview: false,
   description: 'A minimalistic weather card for Home Assistant',
+  documentationURL: "https://github.com/I-Simen-I/simple-weather-card/"
 });
+
+console.info(
+  `%c Simple Weather Card %c ${version} `,
+  'background-color: #555;color: #fff;padding: 3px 2px 3px 3px;border-radius: 14px 0 0 14px;font-family: DejaVu Sans,Verdana,Geneva,sans-serif;text-shadow: 0 1px 0 rgba(1, 1, 1, 0.3)',
+  'background-color: #506eac;color: #fff;padding: 3px 3px 3px 2px;border-radius: 0 14px 14px 0;font-family: DejaVu Sans,Verdana,Geneva,sans-serif;text-shadow: 0 1px 0 rgba(1, 1, 1, 0.3)'
+);
