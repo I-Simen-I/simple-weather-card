@@ -13,17 +13,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: "npm"
+      - name: Enable corepack
+        run: corepack enable
 
-      - run: npm ci
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install dependencies
+        run: yarn install --immutable
 
       - name: Set version
         run: echo "export const version = '${{ github.ref_name }}';" > src/var/version.ts
 
-      - run: npm run build
+      - run: yarn build
 
       - uses: softprops/action-gh-release@v2
         with:

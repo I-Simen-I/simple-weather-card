@@ -16,6 +16,10 @@
   "main": "dist/simple-weather-card.js",
   "repository": "git@github.com:simensohol/simple-weather-card.git",
   "author": "Simen Søhol",
+  "engines": {
+    "node": ">=24.11.0"
+  },
+  "packageManager": "yarn@4.12.0",
   "license": "MIT",
   "devDependencies": {
     "lit": "^3.3.2",

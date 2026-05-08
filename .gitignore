@@ -1,5 +1,8 @@
 /node_modules/
 /dist/
+package-lock.json
+.yarn/cache
+.yarn/install-state.gz
 .DS_Store
 ._*
 .idea/
