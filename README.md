@@ -1,6 +1,6 @@
 # Simple Weather Card
 
-[![](https://img.shields.io/github/release/I-Simen-I/simple-weather-card?style=for-the-badge)](https://github.com/I-Simen-I/simple-weather-card/releases/latest)[![Last commit](https://img.shields.io/github/last-commit/I-Simen-I/simple-weather-card?style=for-the-badge)](#)
+[![](https://img.shields.io/github/release/I-Simen-I/simple-weather-card?style=for-the-badge)](https://github.com/I-Simen-I/simple-weather-card/releases/latest)[![Last commit](https://img.shields.io/github/last-commit/I-Simen-I/simple-weather-card?style=for-the-badge)](https://github.com/I-Simen-I/simple-weather-card/commits/master)
 
 A minimalistic weather card for [Home Assistant](https://github.com/home-assistant/home-assistant) Lovelace UI, inspired by Google Material Design.
 
@@ -155,13 +155,27 @@ custom:
 
 ## Problems?
 
-Make sure you have `javascript_version: latest` set in your `configuration.yaml` under `frontend:`.
-
-Make sure you got the latest version of `simple-weather-card-bundle.js`.
+Make sure you have the latest version of `simple-weather-card.js`.
 
 If you have issues after updating the card, try clearing the browser cache manually.
 
-If you are getting "Custom element doesn't exist: simple-weather-card", or are running an older browser try replacing `type: module` with `type: js` in the resource reference in `ui-lovelace.yaml` or in the raw config editor.
+If you are getting "Custom element doesn't exist: simple-weather-card", try clearing the browser cache or restarting Home Assistant.
+
+## Development
+
+**Requirements:** Node 24, Yarn 4.12
+
+```bash
+yarn install       # install dependencies
+yarn build         # build → dist/simple-weather-card.js
+yarn watch         # watch mode with source maps
+yarn typecheck     # TypeScript type checking
+yarn lint          # ESLint
+```
+
+**Tech stack:** TypeScript, webpack 5, ts-loader, Lit 3, ESLint with prettier
+
+Releases are created automatically by GitHub Actions when a `v*.*.*` tag is pushed. The workflow builds the bundle, updates the version, and publishes `dist/simple-weather-card.js` as a release asset for HACS.
 
 ## License
 
