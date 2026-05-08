@@ -1,28 +1,29 @@
-module.exports = {
-  mode: 'production',
-  entry: './src/simple-weather-card.ts',
+module.exports = (env, argv) => ({
+  mode: argv.mode || "production",
+  devtool: argv.mode === "development" ? "inline-source-map" : false,
+  entry: "./src/simple-weather-card.ts",
   output: {
-    filename: 'simple-weather-card.js'
+    filename: "simple-weather-card.js",
   },
   resolve: {
-    extensions: ['.ts', '.js']
+    extensions: [".ts", ".js"],
   },
   module: {
     rules: [
       {
         test: /\.tsx?$/,
-        use: 'ts-loader',
+        use: "ts-loader",
         exclude: /node_modules/,
       },
       {
         test: /\.(png|svg)$/i,
-        type: 'asset',
+        type: "asset",
         parser: {
           dataUrlCondition: {
-            maxSize: 8192
-          }
-        }
+            maxSize: 8192,
+          },
+        },
       },
     ],
   },
-};
+});

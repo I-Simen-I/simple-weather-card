@@ -25,7 +25,11 @@ jobs:
         run: yarn install --immutable
 
       - name: Set version
-        run: echo "export const version = '${{ github.ref_name }}';" > src/var/version.ts
+        run: |
+          TAG="${{ github.ref_name }}"
+          PKG_VERSION="${TAG#v}"
+          echo "export const version = '${TAG}';" > src/var/version.ts
+          jq --arg v "$PKG_VERSION" '.version = $v' package.json > tmp.json && mv tmp.json package.json
 
       - run: yarn build
 

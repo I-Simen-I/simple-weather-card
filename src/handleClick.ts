@@ -4,7 +4,7 @@ export const handleClick = (
   node: Element,
   hass: HomeAssistant,
   config: NormalizedConfig,
-  actionConfig: TapAction
+  actionConfig: TapAction,
 ): void => {
   switch (actionConfig.action) {
     case "more-info": {

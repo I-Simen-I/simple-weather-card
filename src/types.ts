@@ -32,7 +32,11 @@ export interface HomeAssistant {
   localize: (key: string, ...args: unknown[]) => string;
   resources: Record<string, Record<string, string>>;
   connection: { haVersion: string };
-  callService: (domain: string, service: string, serviceData?: Record<string, unknown>) => void;
+  callService: (
+    domain: string,
+    service: string,
+    serviceData?: Record<string, unknown>,
+  ) => void;
 }
 
 export interface ForecastEntry {

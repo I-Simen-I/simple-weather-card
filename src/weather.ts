@@ -14,6 +14,7 @@ import sunny from "../icons/sunny.png";
 import windy from "../icons/windy.svg";
 import humidity from "../icons/humidity.svg";
 import pressure from "../icons/pressure.svg";
+
 import { HomeAssistant, HassEntity, ForecastEntry } from "./types";
 
 const ICONS: Record<string, string> = {
@@ -51,8 +52,22 @@ const ICONS_NIGHT: Record<string, string> = {
 };
 
 const DIRECTION = [
-  "N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE",
-  "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW",
+  "N",
+  "NNE",
+  "NE",
+  "ENE",
+  "E",
+  "ESE",
+  "SE",
+  "SSE",
+  "S",
+  "SSW",
+  "SW",
+  "WSW",
+  "W",
+  "WNW",
+  "NW",
+  "NNW",
 ];
 
 export default class WeatherEntity {
@@ -65,19 +80,21 @@ export default class WeatherEntity {
     this.hass = hass;
     this.entity = entity;
     this.attr = entity.attributes;
-    this.forecast = (entity.attributes.forecast as ForecastEntry[] | undefined) ?? [{}];
+    this.forecast = (entity.attributes.forecast as
+      | ForecastEntry[]
+      | undefined) ?? [{}];
   }
 
   get state(): string {
     if (this.useComponentEntityTranslations()) {
       return this.toLocale(
         "component.weather.entity_component._.state." + this.entity.state,
-        this.entity.state
+        this.entity.state,
       );
     }
     return this.toLocale(
       "component.weather.state._." + this.entity.state,
-      this.entity.state
+      this.entity.state,
     );
   }
 

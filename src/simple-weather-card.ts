@@ -1,5 +1,6 @@
 import { LitElement, html, TemplateResult } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
+
 import WeatherEntity from "./weather";
 import getStyles from "./style";
 import { handleClick } from "./handleClick";
@@ -10,11 +11,16 @@ import {
   NormalizedConfig,
   CustomMap,
 } from "./types";
-import {version} from "./var/version";
+import { version } from "./var/version";
 
 declare global {
   interface Window {
-    customCards?: Array<{ type: string; name: string; preview: boolean; description: string }>;
+    customCards?: Array<{
+      type: string;
+      name: string;
+      preview: boolean;
+      description: string;
+    }>;
   }
 }
 
@@ -33,7 +39,7 @@ const INFO: Record<string, { icon: string; unit: string }> = {
 };
 
 @customElement("simple-weather-card")
-class SimpleWeatherCard extends LitElement {
+export class SimpleWeatherCard extends LitElement {
   @property({ type: Object }) entity?: HassEntity;
   @state() private weather?: WeatherEntity;
   @state() private custom: CustomMap = {};
@@ -81,7 +87,10 @@ class SimpleWeatherCard extends LitElement {
   setConfig(config: CardConfig): void {
     if (!config.entity) throw new Error("Specify an entity.");
 
-    const toArray = (val: string | string[] | undefined, fallback: string[]): string[] => {
+    const toArray = (
+      val: string | string[] | undefined,
+      fallback: string[],
+    ): string[] => {
       if (val === undefined) return fallback;
       return typeof val === "string" ? [val] : val;
     };
@@ -114,7 +123,8 @@ class SimpleWeatherCard extends LitElement {
         ?bg=${this.config.bg}
         ?fade=${this.config.backdrop.fade}
         ?night=${this.weather?.isNight}
-        style="--day-color: ${this.config.backdrop.day}; --night-color: ${this.config.backdrop.night}; --text-color: ${this.config.backdrop.text};"
+        style="--day-color: ${this.config.backdrop.day}; --night-color: ${this
+          .config.backdrop.night}; --text-color: ${this.config.backdrop.text};"
         @click=${() => this.handleTap()}
       >
         ${this.renderIcon()}
@@ -139,7 +149,10 @@ class SimpleWeatherCard extends LitElement {
       ? this.weather?.getIcon(this.custom["icon-state"].state)
       : this.weather?.icon;
     return this.weather?.hasState && icon
-      ? html`<div class="weather__icon" style="background-image: url(${icon})"></div>`
+      ? html`<div
+          class="weather__icon"
+          style="background-image: url(${icon})"
+        ></div>`
       : "";
   }
 
@@ -170,7 +183,9 @@ class SimpleWeatherCard extends LitElement {
       <span class="weather__info__item">
         <div
           class="weather__icon weather__icon--small"
-          style="background-image: url(${this.weather?.getIcon(INFO[attr].icon)})"
+          style="background-image: url(${this.weather?.getIcon(
+            INFO[attr].icon,
+          )})"
         ></div>
         ${this.renderAttr(attr)}
       </span>
@@ -178,7 +193,9 @@ class SimpleWeatherCard extends LitElement {
   }
 
   private renderAttr(attr: string, uom = true): TemplateResult | undefined {
-    const weatherValue = (this.weather as unknown as Record<string, unknown>)?.[attr];
+    const weatherValue = (this.weather as unknown as Record<string, unknown>)?.[
+      attr
+    ];
     const state = this.custom[attr] ? this.custom[attr].state : weatherValue;
     if (!state && state !== 0) return undefined;
     const unit = this.custom[attr]?.unit ?? INFO[attr]?.unit;
@@ -191,7 +208,10 @@ class SimpleWeatherCard extends LitElement {
 
   private getUnit(unit = "temperature"): string {
     const target = unit === "speed" ? "length" : unit;
-    const res = this._hass!.config.unit_system[target as keyof HomeAssistant["config"]["unit_system"]];
+    const res =
+      this._hass!.config.unit_system[
+        target as keyof HomeAssistant["config"]["unit_system"]
+      ];
     if (unit === "temperature") return res || UNITS.celsius;
     if (unit === "length") return res === "km" ? "mm" : "in";
     if (unit === "speed") return res ? `${res}/h` : "km/h";
@@ -208,7 +228,7 @@ window.customCards.push({
 });
 
 console.info(
-    `%c Simple Weather Card %c ${version} `,
-    'background-color: #555;color: #fff;padding: 3px 2px 3px 3px;border-radius: 14px 0 0 14px;font-family: DejaVu Sans,Verdana,Geneva,sans-serif;text-shadow: 0 1px 0 rgba(1, 1, 1, 0.3)',
-    'background-color: #506eac;color: #fff;padding: 3px 3px 3px 2px;border-radius: 0 14px 14px 0;font-family: DejaVu Sans,Verdana,Geneva,sans-serif;text-shadow: 0 1px 0 rgba(1, 1, 1, 0.3)'
+  `%c Simple Weather Card %c ${version} `,
+  "background-color: #555;color: #fff;padding: 3px 2px 3px 3px;border-radius: 14px 0 0 14px;font-family: DejaVu Sans,Verdana,Geneva,sans-serif;text-shadow: 0 1px 0 rgba(1, 1, 1, 0.3)",
+  "background-color: #506eac;color: #fff;padding: 3px 3px 3px 2px;border-radius: 0 14px 14px 0;font-family: DejaVu Sans,Verdana,Geneva,sans-serif;text-shadow: 0 1px 0 rgba(1, 1, 1, 0.3)",
 );
