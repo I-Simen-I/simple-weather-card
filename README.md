@@ -18,14 +18,14 @@ If you're migrating from the [original repository](https://github.com/kalkih/sim
 1. Remove the old integration from HACS.
 2. Add this repository as a custom repository: `https://github.com/I-Simen-I/simple-weather-card`
 
-[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=I-Simen-I&repository=simple-thermostat&category=plugin)
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=I-Simen-I&repository=simple-weather-card&category=plugin)
 
 3. Install from HACS.
 4. Clear your browser cache after updating.
 
 **Manual:**
 
-1. Download `simple-thermostat.js` from the [latest release](https://github.com/I-Simen-I/simple-weather-card/releases/latest).
+1. Download `simple-weather-card.js` from the [latest release](https://github.com/I-Simen-I/simple-weather-card/releases/latest).
 2. Replace the existing file in your `www` folder.
 3. Clear your browser cache.
 
