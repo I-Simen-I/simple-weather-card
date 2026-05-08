@@ -15,7 +15,12 @@ import windy from "../icons/windy.svg";
 import humidity from "../icons/humidity.svg";
 import pressure from "../icons/pressure.svg";
 
-import { HomeAssistant, HassEntity, ForecastEntry } from "./types";
+import {
+  HomeAssistant,
+  HassEntity,
+  HassEntityAttributes,
+  ForecastEntry,
+} from "./types";
 
 const ICONS: Record<string, string> = {
   "clear-day": sunny,
@@ -86,16 +91,10 @@ export default class WeatherEntity {
   }
 
   get state(): string {
-    if (this.useComponentEntityTranslations()) {
-      return this.toLocale(
-        "component.weather.entity_component._.state." + this.entity.state,
-        this.entity.state,
-      );
-    }
-    return this.toLocale(
-      "component.weather.state._." + this.entity.state,
-      this.entity.state,
-    );
+    const prefix = this.useComponentEntityTranslations()
+      ? "component.weather.entity_component._.state."
+      : "component.weather.state._.";
+    return this.toLocale(prefix + this.entity.state, this.entity.state);
   }
 
   get hasState(): boolean {
@@ -158,6 +157,12 @@ export default class WeatherEntity {
     return ICONS[icon];
   }
 
+  getAttribute(attr: string): string | number | undefined {
+    return (this as unknown as Record<string, string | number | undefined>)[
+      attr
+    ];
+  }
+
   toLocale(string: string, fallback = "unknown"): string {
     return this.hass.localize(string) || fallback;
   }
@@ -171,5 +176,3 @@ export default class WeatherEntity {
     return DIRECTION[dir % 16];
   }
 }
-
-type HassEntityAttributes = HassEntity["attributes"];

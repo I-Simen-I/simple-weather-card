@@ -29,6 +29,14 @@ const UNITS: Record<string, string> = {
   fahrenheit: "°F",
 };
 
+const toArray = (
+  val: string | string[] | undefined,
+  fallback: string[],
+): string[] => {
+  if (val === undefined) return fallback;
+  return typeof val === "string" ? [val] : val;
+};
+
 const INFO: Record<string, { icon: string; unit: string }> = {
   precipitation: { icon: "rainy", unit: "length" },
   precipitation_probability: { icon: "rainy", unit: "%" },
@@ -86,14 +94,6 @@ export class SimpleWeatherCard extends LitElement {
 
   setConfig(config: CardConfig): void {
     if (!config.entity) throw new Error("Specify an entity.");
-
-    const toArray = (
-      val: string | string[] | undefined,
-      fallback: string[],
-    ): string[] => {
-      if (val === undefined) return fallback;
-      return typeof val === "string" ? [val] : val;
-    };
 
     this.config = {
       entity: config.entity,
@@ -193,9 +193,7 @@ export class SimpleWeatherCard extends LitElement {
   }
 
   private renderAttr(attr: string, uom = true): TemplateResult | undefined {
-    const weatherValue = (this.weather as unknown as Record<string, unknown>)?.[
-      attr
-    ];
+    const weatherValue = this.weather?.getAttribute(attr);
     const state = this.custom[attr] ? this.custom[attr].state : weatherValue;
     if (!state && state !== 0) return undefined;
     const unit = this.custom[attr]?.unit ?? INFO[attr]?.unit;
