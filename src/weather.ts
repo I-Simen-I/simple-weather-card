@@ -81,13 +81,15 @@ export default class WeatherEntity {
   private attr: HassEntityAttributes;
   private forecast: ForecastEntry[];
 
-  constructor(hass: HomeAssistant, entity: HassEntity) {
+  constructor(
+    hass: HomeAssistant,
+    entity: HassEntity,
+    forecast: ForecastEntry[] = [],
+  ) {
     this.hass = hass;
     this.entity = entity;
     this.attr = entity.attributes;
-    this.forecast = (entity.attributes.forecast as
-      | ForecastEntry[]
-      | undefined) ?? [{}];
+    this.forecast = forecast.length > 0 ? forecast : [{}];
   }
 
   get state(): string {

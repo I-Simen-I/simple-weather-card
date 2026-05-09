@@ -7,6 +7,7 @@ import { handleClick } from "./handleClick";
 import {
   HomeAssistant,
   HassEntity,
+  ForecastEntry,
   CardConfig,
   NormalizedConfig,
   CustomMap,
@@ -38,12 +39,12 @@ const toArray = (
 };
 
 const INFO: Record<string, { icon: string; unit: string }> = {
-  precipitation: { icon: "rainy", unit: "length" },
+  precipitation: { icon: "rainy", unit: "precipitation" },
   precipitation_probability: { icon: "rainy", unit: "%" },
   humidity: { icon: "humidity", unit: "%" },
-  wind_speed: { icon: "windy", unit: "speed" },
+  wind_speed: { icon: "windy", unit: "wind_speed" },
   wind_bearing: { icon: "windy", unit: "" },
-  pressure: { icon: "pressure", unit: "hPa" },
+  pressure: { icon: "pressure", unit: "pressure" },
 };
 
 @customElement("simple-weather-card")
@@ -54,6 +55,8 @@ export class SimpleWeatherCard extends LitElement {
 
   private _hass?: HomeAssistant;
   private config!: NormalizedConfig;
+  private _forecast: ForecastEntry[] = [];
+  private _forecastUnsubscribe?: () => void;
 
   static styles = getStyles();
 
@@ -64,7 +67,8 @@ export class SimpleWeatherCard extends LitElement {
     const entityObj = hass.states[entity];
     if (entityObj && this.entity !== entityObj) {
       this.entity = entityObj;
-      this.weather = new WeatherEntity(hass, entityObj);
+      this._subscribeForecasts(entity);
+      this.weather = new WeatherEntity(hass, entityObj, this._forecast);
     }
     const newCustom: CustomMap = {};
     custom.forEach((ele) => {
@@ -86,6 +90,39 @@ export class SimpleWeatherCard extends LitElement {
 
   get hass(): HomeAssistant {
     return this._hass!;
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this._forecastUnsubscribe?.();
+    this._forecastUnsubscribe = undefined;
+  }
+
+  private _subscribeForecasts(entityId: string): void {
+    this._forecastUnsubscribe?.();
+    this._forecastUnsubscribe = undefined;
+
+    this._hass!.connection
+      .subscribeMessage<{ forecast: ForecastEntry[] | null }>(
+        (msg) => {
+          this._forecast = msg.forecast ?? [];
+          if (this.entity) {
+            this.weather = new WeatherEntity(
+              this._hass!,
+              this.entity,
+              this._forecast,
+            );
+          }
+        },
+        {
+          type: "weather/subscribe_forecast",
+          forecast_type: "daily",
+          entity_id: entityId,
+        },
+      )
+      .then((unsub) => {
+        this._forecastUnsubscribe = unsub;
+      });
   }
 
   private get name(): string {
@@ -114,7 +151,9 @@ export class SimpleWeatherCard extends LitElement {
   }
 
   protected shouldUpdate(changedProps: Map<string, unknown>): boolean {
-    return ["entity", "custom"].some((prop) => changedProps.has(prop));
+    return ["entity", "custom", "weather"].some((prop) =>
+      changedProps.has(prop),
+    );
   }
 
   protected render(): TemplateResult {
@@ -205,15 +244,19 @@ export class SimpleWeatherCard extends LitElement {
   }
 
   private getUnit(unit = "temperature"): string {
-    const target = unit === "speed" ? "length" : unit;
-    const res =
-      this._hass!.config.unit_system[
-        target as keyof HomeAssistant["config"]["unit_system"]
-      ];
-    if (unit === "temperature") return res || UNITS.celsius;
-    if (unit === "length") return res === "km" ? "mm" : "in";
-    if (unit === "speed") return res ? `${res}/h` : "km/h";
-    return unit;
+    const attr = this.entity?.attributes;
+    switch (unit) {
+      case "temperature":
+        return (attr?.temperature_unit as string) || UNITS.celsius;
+      case "precipitation":
+        return (attr?.precipitation_unit as string) || "mm";
+      case "wind_speed":
+        return (attr?.wind_speed_unit as string) || "km/h";
+      case "pressure":
+        return (attr?.pressure_unit as string) || "hPa";
+      default:
+        return unit;
+    }
   }
 }
 

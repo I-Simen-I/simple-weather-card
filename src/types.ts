@@ -3,11 +3,14 @@ export interface HassEntityAttributes {
   friendly_name?: string;
   unit_of_measurement?: string;
   temperature?: number;
+  temperature_unit?: string;
   wind_speed?: number;
+  wind_speed_unit?: string;
   wind_bearing?: number;
   pressure?: number;
+  pressure_unit?: string;
   humidity?: number;
-  forecast?: ForecastEntry[];
+  precipitation_unit?: string;
 }
 
 export interface HassEntity {
@@ -31,7 +34,13 @@ export interface HomeAssistant {
   config: HassConfig;
   localize: (key: string, ...args: unknown[]) => string;
   resources: Record<string, Record<string, string>>;
-  connection: { haVersion: string };
+  connection: {
+    haVersion: string;
+    subscribeMessage: <Result>(
+      callback: (result: Result) => void,
+      msg: Record<string, unknown>,
+    ) => Promise<() => void>;
+  };
   callService: (
     domain: string,
     service: string,
