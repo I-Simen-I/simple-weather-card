@@ -60,6 +60,11 @@ export class SimpleWeatherCard extends LitElement {
 
   static styles = getStyles();
 
+  static async getConfigElement(): Promise<HTMLElement> {
+    await import(/* webpackMode: "eager" */ "./editor");
+    return document.createElement("simple-weather-card-editor");
+  }
+
   static getStubConfig(hass: HomeAssistant): Partial<CardConfig> {
     const entity = Object.keys(hass.states).find((e) =>
       e.startsWith("weather."),
