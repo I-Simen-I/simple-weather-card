@@ -56,6 +56,7 @@ export interface ForecastEntry {
 }
 
 export interface BackdropConfig {
+  bg: boolean;
   day: string;
   night: string;
   text: string;
@@ -68,17 +69,12 @@ export interface TapAction {
   navigation_path?: string;
   perform_action?: string;
   data?: Record<string, unknown>;
-  /** @deprecated use perform_action */
-  service?: string;
-  /** @deprecated use data */
-  service_data?: Record<string, unknown>;
 }
 
 export interface CardConfig {
   entity: string;
   name?: string;
-  bg?: boolean;
-  primary_info?: string | string[];
+primary_info?: string | string[];
   secondary_info?: string | string[];
   custom?: Array<Record<string, string>>;
   tap_action?: TapAction;
@@ -88,7 +84,6 @@ export interface CardConfig {
 export interface NormalizedConfig {
   entity: string;
   name?: string;
-  bg: boolean;
   primary_info: string[];
   secondary_info: string[];
   custom: Array<Record<string, string>>;

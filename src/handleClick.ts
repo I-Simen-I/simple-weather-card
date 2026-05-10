@@ -27,10 +27,10 @@ export const handleClick = (
     }
     case "perform_action":
     case "call-service": {
-      const action = actionConfig.perform_action ?? actionConfig.service;
+      const action = actionConfig.perform_action;
       if (!action) return;
       const [domain, service] = action.split(".", 2);
-      const serviceData = actionConfig.data ?? actionConfig.service_data;
+      const serviceData = actionConfig.data;
       hass.callService(domain, service, { ...serviceData });
       break;
     }

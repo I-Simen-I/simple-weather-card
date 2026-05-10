@@ -147,12 +147,12 @@ export class SimpleWeatherCard extends LitElement {
     this.config = {
       entity: config.entity,
       name: config.name,
-      bg: config.bg ?? Boolean(config.backdrop),
       primary_info: toArray(config.primary_info, ["extrema"]),
       secondary_info: toArray(config.secondary_info, ["precipitation"]),
       custom: config.custom ?? [],
       tap_action: config.tap_action ?? { action: "more-info" },
       backdrop: {
+        bg: config.backdrop?.bg ?? false,
         day: "#45aaf2",
         night: "#a55eea",
         text: "var(--text-dark-color)",
@@ -171,7 +171,7 @@ export class SimpleWeatherCard extends LitElement {
   protected render(): TemplateResult {
     return html`
       <ha-card
-        ?bg=${this.config.bg}
+        ?bg=${this.config.backdrop.bg}
         ?fade=${this.config.backdrop.fade}
         ?night=${this.weather?.isNight}
         style="--day-color: ${this.config.backdrop.day}; --night-color: ${this

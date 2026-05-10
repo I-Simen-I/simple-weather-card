@@ -40,7 +40,6 @@ const SCHEMA = [
     selector: { entity: { domain: "weather" } },
   },
   { name: "name", selector: { text: {} } },
-  { name: "bg", selector: { boolean: {} } },
   {
     name: "primary_info",
     selector: {
@@ -58,6 +57,7 @@ const SCHEMA = [
     name: "backdrop",
     title: "Backdrop",
     schema: [
+      { name: "bg", selector: { boolean: {} } },
       { name: "day", selector: { text: {} } },
       { name: "night", selector: { text: {} } },
       { name: "text", selector: { text: {} } },
