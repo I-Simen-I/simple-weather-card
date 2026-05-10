@@ -147,6 +147,7 @@ export class SimpleWeatherCard extends LitElement {
     this.config = {
       entity: config.entity,
       name: config.name,
+      show_name: config.show_name ?? true,
       primary_info: toArray(config.primary_info, ["extrema"]),
       secondary_info: toArray(config.secondary_info, ["precipitation"]),
       custom: config.custom ?? [],
@@ -181,7 +182,7 @@ export class SimpleWeatherCard extends LitElement {
         ${this.renderIcon()}
         <div class="weather__info">
           <span class="weather__info__title">
-            ${this.renderAttr("temp")} ${this.name}
+            ${this.renderAttr("temp")} ${this.config.show_name ? this.name : ""}
           </span>
           <span class="weather__info__state">
             ${this.renderAttr("state", false)}

@@ -74,7 +74,8 @@ export interface TapAction {
 export interface CardConfig {
   entity: string;
   name?: string;
-primary_info?: string | string[];
+  show_name?: boolean;
+  primary_info?: string | string[];
   secondary_info?: string | string[];
   custom?: Array<Record<string, string>>;
   tap_action?: TapAction;
@@ -84,6 +85,7 @@ primary_info?: string | string[];
 export interface NormalizedConfig {
   entity: string;
   name?: string;
+  show_name: boolean;
   primary_info: string[];
   secondary_info: string[];
   custom: Array<Record<string, string>>;

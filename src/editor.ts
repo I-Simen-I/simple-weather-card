@@ -40,6 +40,7 @@ const SCHEMA = [
     selector: { entity: { domain: "weather" } },
   },
   { name: "name", selector: { text: {} } },
+  { name: "show_name", selector: { boolean: {} } },
   {
     name: "primary_info",
     selector: {
@@ -69,6 +70,7 @@ const SCHEMA = [
 const LABELS: Record<string, string> = {
   entity: "Weather entity",
   name: "Name",
+  show_name: "Show name",
   bg: "Show backdrop",
   primary_info: "Primary info",
   secondary_info: "Secondary info",
