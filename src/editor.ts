@@ -66,10 +66,7 @@ const SECONDARY_INFO_SCHEMA = [
 
 const BACKDROP_SCHEMA = [
   {
-    type: "expandable",
     name: "backdrop",
-    title: "Backdrop",
-    icon: "mdi:palette",
     schema: [
       { name: "bg", selector: { boolean: {} } },
       { name: "fade", selector: { boolean: {} } },
@@ -212,13 +209,20 @@ export class SimpleWeatherCardEditor extends LitElement {
           ></ha-form>
         </div>
       </ha-expansion-panel>
-      <ha-form
-        .hass=${this.hass}
-        .data=${this._config}
-        .schema=${BACKDROP_SCHEMA}
-        .computeLabel=${this._computeLabel}
-        @value-changed=${this._valueChanged}
-      ></ha-form>
+      <ha-expansion-panel outlined>
+        <span slot="header"
+        ><ha-icon icon="mdi:palette"></ha-icon> Backdrop</span
+        >
+        <div class="section-content">
+          <ha-form
+              .hass=${this.hass}
+              .data=${this._config}
+              .schema=${BACKDROP_SCHEMA}
+              .computeLabel=${this._computeLabel}
+              @value-changed=${this._valueChanged}
+          ></ha-form>
+        </div>
+      </ha-expansion-panel>
       <ha-expansion-panel outlined>
         <span slot="header"><ha-icon icon="mdi:cog"></ha-icon> Custom sensor overrides</span>
         <div class="custom-content">
