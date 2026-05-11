@@ -64,6 +64,17 @@ const SECONDARY_INFO_SCHEMA = [
   },
 ];
 
+const TAP_ACTION_SCHEMA = [
+  {
+    name: "tap_action",
+    selector: {
+      ui_action: {
+        default_action: "more-info",
+      },
+    },
+  },
+];
+
 const BACKDROP_SCHEMA = [
     { name: "bg", selector: { boolean: {} } },
     { name: "fade", selector: { boolean: {} } },
@@ -76,6 +87,7 @@ const LABELS: Record<string, string> = {
   entity: "Weather entity",
   name: "Name",
   show_name: "Show name",
+  tap_action: "Tap action",
   bg: "Show backdrop",
   primary_info: "Primary info",
   secondary_info: "Secondary info",
@@ -127,6 +139,7 @@ export class SimpleWeatherCardEditor extends LitElement {
     this._config = {
       ...config,
       show_name: config.show_name ?? true,
+      tap_action: config.tap_action ?? { action: "more-info" },
       primary_info: toArray(config.primary_info, ["extrema"]),
       secondary_info: toArray(config.secondary_info, ["precipitation"]),
     };
@@ -209,6 +222,20 @@ export class SimpleWeatherCardEditor extends LitElement {
             .hass=${this.hass}
             .data=${this._config}
             .schema=${SECONDARY_INFO_SCHEMA}
+            .computeLabel=${this._computeLabel}
+            @value-changed=${this._valueChanged}
+          ></ha-form>
+        </div>
+      </ha-expansion-panel>
+      <ha-expansion-panel outlined>
+        <span slot="header"
+          ><ha-icon icon="mdi:gesture-tap"></ha-icon> Tap action</span
+        >
+        <div class="section-content">
+          <ha-form
+            .hass=${this.hass}
+            .data=${this._config}
+            .schema=${TAP_ACTION_SCHEMA}
             .computeLabel=${this._computeLabel}
             @value-changed=${this._valueChanged}
           ></ha-form>
