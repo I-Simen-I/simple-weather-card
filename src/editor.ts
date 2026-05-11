@@ -65,16 +65,11 @@ const SECONDARY_INFO_SCHEMA = [
 ];
 
 const BACKDROP_SCHEMA = [
-  {
-    name: "backdrop",
-    schema: [
-      { name: "bg", selector: { boolean: {} } },
-      { name: "fade", selector: { boolean: {} } },
-      { name: "day", selector: { text: {} } },
-      { name: "night", selector: { text: {} } },
-      { name: "text", selector: { text: {} } },
-    ],
-  },
+    { name: "bg", selector: { boolean: {} } },
+    { name: "fade", selector: { boolean: {} } },
+    { name: "day", selector: { text: {} } },
+    { name: "night", selector: { text: {} } },
+    { name: "text", selector: { text: {} } },
 ];
 
 const LABELS: Record<string, string> = {
