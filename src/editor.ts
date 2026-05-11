@@ -118,6 +118,7 @@ export class SimpleWeatherCardEditor extends LitElement {
     this._customMap = customToMap(config.custom);
     this._config = {
       ...config,
+      show_name: config.show_name ?? true,
       primary_info: toArray(config.primary_info, ["extrema"]),
       secondary_info: toArray(config.secondary_info, ["precipitation"]),
     };
