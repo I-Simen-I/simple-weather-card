@@ -161,6 +161,7 @@ export class SimpleWeatherCard extends LitElement {
         ...config.backdrop,
       },
       card_mod: config.card_mod,
+      uix: config.uix,
     };
   }
 
@@ -172,6 +173,7 @@ export class SimpleWeatherCard extends LitElement {
 
   protected updated(): void {
     this._applyCardMod();
+    this._applyUix();
   }
 
   private _applyCardMod(): void {
@@ -180,6 +182,19 @@ export class SimpleWeatherCard extends LitElement {
         this,
         "card",
         this.config.card_mod,
+        { config: this.config },
+        true,
+        "type-custom-simple-weather-card",
+      );
+    });
+  }
+
+  private _applyUix(): void {
+    customElements.whenDefined("uix-node").then((uix: unknown) => {
+      (uix as { applyToElement: (...args: unknown[]) => void }).applyToElement(
+        this,
+        "card",
+        this.config.uix,
         { config: this.config },
         true,
         "type-custom-simple-weather-card",

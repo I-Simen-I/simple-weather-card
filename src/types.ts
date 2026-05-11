@@ -76,6 +76,12 @@ export interface CardModConfig {
   class?: string | string[];
 }
 
+export interface UixConfig {
+  style?: string | Record<string, unknown>;
+  class?: string | string[];
+  debug?: boolean;
+}
+
 export interface CardConfig {
   entity: string;
   name?: string;
@@ -86,6 +92,7 @@ export interface CardConfig {
   tap_action?: TapAction;
   backdrop?: Partial<BackdropConfig>;
   card_mod?: CardModConfig;
+  uix?: UixConfig;
 }
 
 export interface NormalizedConfig {
@@ -98,6 +105,7 @@ export interface NormalizedConfig {
   tap_action: TapAction;
   backdrop: BackdropConfig;
   card_mod?: CardModConfig;
+  uix?: UixConfig;
 }
 
 export interface CustomState {
