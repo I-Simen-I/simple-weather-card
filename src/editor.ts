@@ -42,21 +42,38 @@ const SCHEMA = [
   { name: "name", selector: { text: {} } },
   { name: "show_name", selector: { boolean: {} } },
   {
-    name: "primary_info",
-    selector: {
-      select: { multiple: true, mode: "list", options: INFO_OPTIONS },
-    },
+    type: "expandable",
+    name: "primary_info_section",
+    title: "Primary info",
+    icon: "mdi:format-list-bulleted",
+    schema: [
+      {
+        name: "primary_info",
+        selector: {
+          select: { multiple: true, mode: "list", options: INFO_OPTIONS },
+        },
+      },
+    ],
   },
   {
-    name: "secondary_info",
-    selector: {
-      select: { multiple: true, mode: "list", options: INFO_OPTIONS },
-    },
+    type: "expandable",
+    name: "secondary_info_section",
+    title: "Secondary info",
+    icon: "mdi:format-list-bulleted",
+    schema: [
+      {
+        name: "secondary_info",
+        selector: {
+          select: { multiple: true, mode: "list", options: INFO_OPTIONS },
+        },
+      },
+    ],
   },
   {
     type: "expandable",
     name: "backdrop",
     title: "Backdrop",
+    icon: "mdi:palette",
     schema: [
       { name: "bg", selector: { boolean: {} } },
       { name: "day", selector: { text: {} } },
@@ -154,7 +171,8 @@ export class SimpleWeatherCardEditor extends LitElement {
         .computeLabel=${this._computeLabel}
         @value-changed=${this._valueChanged}
       ></ha-form>
-      <ha-expansion-panel .header=${"Custom sensor overrides"} outlined>
+      <ha-expansion-panel outlined>
+        <span slot="header"><ha-icon icon="mdi:cog"></ha-icon> Custom sensor overrides</span>
         <div class="custom-content">
           ${CUSTOM_KEYS.map(
             ({ key, label }) => html`
