@@ -310,7 +310,7 @@ window.customCards = window.customCards || [];
 window.customCards.push({
   type: "simple-weather-card",
   name: "Simple Weather Card",
-  preview: false,
+  preview: true,
   description: "A minimalistic weather card for Home Assistant",
 });
 
