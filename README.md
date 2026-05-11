@@ -1,6 +1,6 @@
 # Simple Weather Card
 
-[![](https://img.shields.io/github/release/I-Simen-I/simple-weather-card?style=for-the-badge)](https://github.com/I-Simen-I/simple-weather-card/releases/latest)[![Last commit](https://img.shields.io/github/last-commit/I-Simen-I/simple-weather-card?style=for-the-badge)](https://github.com/I-Simen-I/simple-weather-card/commits/master)
+[![](https://img.shields.io/github/release/I-Simen-I/simple-weather-card?style=for-the-badge)](https://github.com/I-Simen-I/simple-weather-card/releases/latest)[![Last commit](https://img.shields.io/github/last-commit/I-Simen-I/simple-weather-card?style=for-the-badge)](https://github.com/I-Simen-I/simple-weather-card/commits/master)[![HACS](https://img.shields.io/badge/HACS-Custom-orange.svg?style=for-the-badge)](https://github.com/hacs/integration)
 
 > A fork of [simple-weather-card](https://github.com/kalkih/simple-weather-card) by [@kalkih](https://github.com/kalkih), kept up to date with current Home Assistant releases.
 
