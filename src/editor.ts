@@ -138,6 +138,16 @@ export class SimpleWeatherCardEditor extends LitElement {
     });
   }
 
+  private _backdropChanged(ev: CustomEvent): void {
+    fireEvent(this, "config-changed", {
+      config: {
+        ...this._config,
+        backdrop: { ...this._config?.backdrop, ...ev.detail.value },
+        custom: mapToCustom(this._customMap),
+      },
+    });
+  }
+
   private _customChanged(key: string, ev: CustomEvent): void {
     const value = (ev.detail.value as string) ?? "";
     const newMap = { ...this._customMap, [key]: value };
@@ -210,11 +220,11 @@ export class SimpleWeatherCardEditor extends LitElement {
         >
         <div class="section-content">
           <ha-form
-              .hass=${this.hass}
-              .data=${this._config}
-              .schema=${BACKDROP_SCHEMA}
-              .computeLabel=${this._computeLabel}
-              @value-changed=${this._valueChanged}
+            .hass=${this.hass}
+            .data=${this._config?.backdrop ?? {}}
+            .schema=${BACKDROP_SCHEMA}
+            .computeLabel=${this._computeLabel}
+            @value-changed=${this._backdropChanged}
           ></ha-form>
         </div>
       </ha-expansion-panel>
