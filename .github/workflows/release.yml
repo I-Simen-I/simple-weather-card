@@ -35,6 +35,15 @@ jobs:
 
       - run: yarn build
 
+      - name: Detect prerelease
+        id: prerelease
+        run: |
+          if [[ "${{ github.event.base_ref }}" == "refs/heads/beta" ]]; then
+            echo "is_prerelease=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "is_prerelease=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Generate changelog
         run: |
           PREV_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
@@ -49,7 +58,9 @@ jobs:
             echo "EOF"
           } >> "$GITHUB_ENV"
 
-      - uses: softprops/action-gh-release@v3
+      - name: Create release
+        uses: softprops/action-gh-release@v3
         with:
           files: dist/simple-weather-card.js
           body: ${{ env.CHANGELOG }}
+          prerelease: ${{ steps.prerelease.outputs.is_prerelease }}
