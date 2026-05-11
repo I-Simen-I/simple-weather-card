@@ -71,6 +71,11 @@ export interface TapAction {
   data?: Record<string, unknown>;
 }
 
+export interface CardModConfig {
+  style?: string;
+  class?: string | string[];
+}
+
 export interface CardConfig {
   entity: string;
   name?: string;
@@ -80,6 +85,7 @@ export interface CardConfig {
   custom?: Array<Record<string, string>>;
   tap_action?: TapAction;
   backdrop?: Partial<BackdropConfig>;
+  card_mod?: CardModConfig;
 }
 
 export interface NormalizedConfig {
@@ -91,6 +97,7 @@ export interface NormalizedConfig {
   custom: Array<Record<string, string>>;
   tap_action: TapAction;
   backdrop: BackdropConfig;
+  card_mod?: CardModConfig;
 }
 
 export interface CustomState {

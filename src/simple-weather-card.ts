@@ -160,6 +160,7 @@ export class SimpleWeatherCard extends LitElement {
         fade: false,
         ...config.backdrop,
       },
+      card_mod: config.card_mod,
     };
   }
 
@@ -167,6 +168,23 @@ export class SimpleWeatherCard extends LitElement {
     return ["entity", "custom", "weather"].some((prop) =>
       changedProps.has(prop),
     );
+  }
+
+  protected updated(): void {
+    this._applyCardMod();
+  }
+
+  private _applyCardMod(): void {
+    customElements.whenDefined("card-mod").then((CardMod: unknown) => {
+      (CardMod as { applyToElement: (...args: unknown[]) => void }).applyToElement(
+        this,
+        "card",
+        this.config.card_mod,
+        { config: this.config },
+        true,
+        "type-custom-simple-weather-card",
+      );
+    });
   }
 
   protected render(): TemplateResult {
