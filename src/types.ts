@@ -49,6 +49,8 @@ export interface HomeAssistant {
 }
 
 export interface ForecastEntry {
+  datetime?: string;
+  condition?: string;
   temperature?: number;
   templow?: number;
   precipitation?: number;
@@ -91,6 +93,7 @@ export interface CardConfig {
   custom?: Array<Record<string, string>>;
   tap_action?: TapAction;
   backdrop?: Partial<BackdropConfig>;
+  show_forecast?: boolean;
   card_mod?: CardModConfig;
   uix?: UixConfig;
 }
@@ -104,6 +107,7 @@ export interface NormalizedConfig {
   custom: Array<Record<string, string>>;
   tap_action: TapAction;
   backdrop: BackdropConfig;
+  show_forecast: boolean;
   card_mod?: CardModConfig;
   uix?: UixConfig;
 }

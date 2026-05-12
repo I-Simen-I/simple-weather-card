@@ -4,13 +4,18 @@ export default function getStyles(): CSSResult {
   return css`
     ha-card {
       display: flex;
-      flex-flow: row;
-      align-items: center;
+      flex-flow: column;
       padding: 16px;
       color: var(--primary-text-color, #000);
       font-weight: var(--swc-font-weight, 400);
       transition: background 1s;
       cursor: pointer;
+    }
+    .weather__main {
+      display: flex;
+      flex-flow: row;
+      align-items: center;
+      width: 100%;
     }
     ha-card[bg] {
       font-weight: var(--swc-font-weight, 500);
@@ -71,6 +76,42 @@ export default function getStyles(): CSSResult {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+    }
+    .weather__forecast {
+      display: flex;
+      flex-flow: row;
+      justify-content: space-around;
+      width: 100%;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--divider-color, rgba(0, 0, 0, 0.12));
+    }
+    ha-card[bg] .weather__forecast {
+      border-top-color: rgba(255, 255, 255, 0.25);
+    }
+    .weather__forecast__day {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .weather__forecast__dayname {
+      font-size: 0.75em;
+      opacity: 0.7;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .weather__icon--forecast {
+      height: 28px;
+      width: 28px;
+      flex: 0 0 28px;
+    }
+    .weather__forecast__temp {
+      font-size: 0.8em;
+      line-height: 1.2;
+    }
+    .weather__forecast__temp--low {
+      opacity: 0.6;
     }
   `;
 }

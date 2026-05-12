@@ -160,9 +160,11 @@ export class SimpleWeatherCard extends LitElement {
         fade: false,
         ...config.backdrop,
       },
+      show_forecast: config.show_forecast ?? false,
       card_mod: config.card_mod,
       uix: config.uix,
     };
+    this.requestUpdate();
   }
 
   protected shouldUpdate(changedProps: Map<string, unknown>): boolean {
@@ -212,19 +214,22 @@ export class SimpleWeatherCard extends LitElement {
           .config.backdrop.night}; --text-color: ${this.config.backdrop.text};"
         @click=${() => this.handleTap()}
       >
-        ${this.renderIcon()}
-        <div class="weather__info">
-          <span class="weather__info__title">
-            ${this.renderAttr("temp")} ${this.config.show_name ? this.name : ""}
-          </span>
-          <span class="weather__info__state">
-            ${this.renderAttr("state", false)}
-          </span>
+        <div class="weather__main">
+          ${this.renderIcon()}
+          <div class="weather__info">
+            <span class="weather__info__title">
+              ${this.renderAttr("temp")} ${this.config.show_name ? this.name : ""}
+            </span>
+            <span class="weather__info__state">
+              ${this.renderAttr("state", false)}
+            </span>
+          </div>
+          <div class="weather__info weather__info--add">
+            ${this.renderInfoRow(this.config.primary_info)}
+            ${this.renderInfoRow(this.config.secondary_info)}
+          </div>
         </div>
-        <div class="weather__info weather__info--add">
-          ${this.renderInfoRow(this.config.primary_info)}
-          ${this.renderInfoRow(this.config.secondary_info)}
-        </div>
+        ${this.config.show_forecast ? this.renderForecast() : ""}
       </ha-card>
     `;
   }
@@ -274,6 +279,41 @@ export class SimpleWeatherCard extends LitElement {
         ></div>
         ${this.renderAttr(attr)}
       </span>
+    `;
+  }
+
+  private renderForecast(): TemplateResult {
+    const days = this._forecast.slice(1, 6);
+    const tempUnit = this.getUnit("temperature");
+    return html`
+      <div class="weather__forecast">
+        ${days.map((day) => {
+          const date = day.datetime ? new Date(day.datetime) : null;
+          const dayName = date
+            ? date.toLocaleDateString(undefined, { weekday: "short" })
+            : "";
+          const icon = day.condition
+            ? this.weather?.getIcon(day.condition)
+            : undefined;
+          return html`
+            <div class="weather__forecast__day">
+              <span class="weather__forecast__dayname">${dayName}</span>
+              ${icon
+                ? html`<div
+                    class="weather__icon weather__icon--forecast"
+                    style="background-image: url(${icon})"
+                  ></div>`
+                : ""}
+              <span class="weather__forecast__temp weather__forecast__temp--high">
+                ${day.temperature !== undefined ? Math.round(day.temperature) : "--"}${tempUnit}
+              </span>
+              <span class="weather__forecast__temp weather__forecast__temp--low">
+                ${day.templow !== undefined ? Math.round(day.templow) : "--"}${tempUnit}
+              </span>
+            </div>
+          `;
+        })}
+      </div>
     `;
   }
 

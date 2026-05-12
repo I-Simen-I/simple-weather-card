@@ -64,6 +64,10 @@ const SECONDARY_INFO_SCHEMA = [
   },
 ];
 
+const FORECAST_SCHEMA = [
+  { name: "show_forecast", selector: { boolean: {} } },
+];
+
 const TAP_ACTION_SCHEMA = [
   {
     name: "tap_action",
@@ -87,6 +91,7 @@ const LABELS: Record<string, string> = {
   entity: "Weather entity",
   name: "Name",
   show_name: "Show name",
+  show_forecast: "Show 5-day forecast",
   tap_action: "Tap action",
   bg: "Show backdrop",
   primary_info: "Primary info",
@@ -227,6 +232,13 @@ export class SimpleWeatherCardEditor extends LitElement {
           ></ha-form>
         </div>
       </ha-expansion-panel>
+      <ha-form
+        .hass=${this.hass}
+        .data=${this._config}
+        .schema=${FORECAST_SCHEMA}
+        .computeLabel=${this._computeLabel}
+        @value-changed=${this._valueChanged}
+      ></ha-form>
       <ha-expansion-panel outlined>
         <span slot="header"
           ><ha-icon icon="mdi:gesture-tap"></ha-icon> Tap action</span
