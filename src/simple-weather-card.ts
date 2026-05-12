@@ -129,7 +129,7 @@ export class SimpleWeatherCard extends LitElement {
       },
       {
         type: "weather/subscribe_forecast",
-        forecast_type: "daily",
+        forecast_type: this.config.forecast_type,
         entity_id: entityId,
       },
     ).then((unsub) => {
@@ -161,9 +161,13 @@ export class SimpleWeatherCard extends LitElement {
         ...config.backdrop,
       },
       show_forecast: config.show_forecast ?? false,
+      forecast_type: config.forecast_type ?? "daily",
       card_mod: config.card_mod,
       uix: config.uix,
     };
+    if (this._hass && this.entity) {
+      this._subscribeForecasts(this.config.entity);
+    }
     this.requestUpdate();
   }
 
@@ -283,22 +287,27 @@ export class SimpleWeatherCard extends LitElement {
   }
 
   private renderForecast(): TemplateResult {
-    const days = this._forecast.slice(1, 6);
+    const isHourly = this.config.forecast_type === "hourly";
+    const entries = isHourly
+      ? this._forecast.slice(0, 5)
+      : this._forecast.slice(1, 6);
     const tempUnit = this.getUnit("temperature");
+    const lang = this.hass.locale.language;
     return html`
       <div class="weather__forecast">
-        ${days.map((day) => {
-          const date = day.datetime ? new Date(day.datetime) : null;
-          const lang = this.hass.locale.language;
-          const dayName = date
-            ? date.toLocaleDateString(lang, { weekday: "short" })
+        ${entries.map((entry) => {
+          const date = entry.datetime ? new Date(entry.datetime) : null;
+          const label = date
+            ? isHourly
+              ? date.toLocaleTimeString(lang, { hour: "2-digit", minute: "2-digit", hour12: false })
+              : date.toLocaleDateString(lang, { weekday: "short" })
             : "";
-          const icon = day.condition
-            ? this.weather?.getIcon(day.condition)
+          const icon = entry.condition
+            ? this.weather?.getIcon(entry.condition)
             : undefined;
           return html`
             <div class="weather__forecast__day">
-              <span class="weather__forecast__dayname">${dayName}</span>
+              <span class="weather__forecast__dayname">${label}</span>
               ${icon
                 ? html`<div
                     class="weather__icon weather__icon--forecast"
@@ -306,11 +315,13 @@ export class SimpleWeatherCard extends LitElement {
                   ></div>`
                 : ""}
               <span class="weather__forecast__temp weather__forecast__temp--high">
-                ${day.temperature !== undefined ? day.temperature.toFixed(1) : "--"}${tempUnit}
+                ${entry.temperature !== undefined ? entry.temperature.toFixed(1) : "--"}${tempUnit}
               </span>
-              <span class="weather__forecast__temp weather__forecast__temp--low">
-                ${day.templow !== undefined ? day.templow.toFixed(1) : "--"}${tempUnit}
-              </span>
+              ${!isHourly
+                ? html`<span class="weather__forecast__temp weather__forecast__temp--low">
+                    ${entry.templow !== undefined ? entry.templow.toFixed(1) : "--"}${tempUnit}
+                  </span>`
+                : ""}
             </div>
           `;
         })}

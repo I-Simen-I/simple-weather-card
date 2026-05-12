@@ -95,6 +95,7 @@ export interface CardConfig {
   tap_action?: TapAction;
   backdrop?: Partial<BackdropConfig>;
   show_forecast?: boolean;
+  forecast_type?: "daily" | "hourly";
   card_mod?: CardModConfig;
   uix?: UixConfig;
 }
@@ -109,6 +110,7 @@ export interface NormalizedConfig {
   tap_action: TapAction;
   backdrop: BackdropConfig;
   show_forecast: boolean;
+  forecast_type: "daily" | "hourly";
   card_mod?: CardModConfig;
   uix?: UixConfig;
 }

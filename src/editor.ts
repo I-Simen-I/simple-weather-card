@@ -66,6 +66,17 @@ const SECONDARY_INFO_SCHEMA = [
 
 const FORECAST_SCHEMA = [
   { name: "show_forecast", selector: { boolean: {} } },
+  {
+    name: "forecast_type",
+    selector: {
+      select: {
+        options: [
+          { value: "daily", label: "Daily" },
+          { value: "hourly", label: "Hourly" },
+        ],
+      },
+    },
+  },
 ];
 
 const TAP_ACTION_SCHEMA = [
@@ -91,7 +102,8 @@ const LABELS: Record<string, string> = {
   entity: "Weather entity",
   name: "Name",
   show_name: "Show name",
-  show_forecast: "Show 5-day forecast",
+  show_forecast: "Show forecast",
+  forecast_type: "Forecast type",
   tap_action: "Tap action",
   bg: "Show backdrop",
   primary_info: "Primary info",
