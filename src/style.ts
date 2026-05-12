@@ -114,5 +114,14 @@ export default function getStyles(): CSSResult {
     .weather__forecast__temp--low {
       opacity: 0.6;
     }
+    .weather__icon--arrow {
+      display: inline-block;
+      height: 1em;
+      width: 1em;
+      min-width: 1em;
+      flex: initial;
+      margin: 0 0.2em;
+      transition: transform 0.5s ease;
+    }
   `;
 }

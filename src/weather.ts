@@ -134,6 +134,10 @@ export default class WeatherEntity {
       : this.toLocale("state.default.unknown");
   }
 
+  get wind_bearing_deg(): number | undefined {
+    return this.attr.wind_bearing;
+  }
+
   get precipitation(): number {
     return Math.round((this.forecast[0]?.precipitation ?? 0) * 100) / 100;
   }

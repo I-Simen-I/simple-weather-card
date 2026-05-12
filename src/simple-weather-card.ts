@@ -273,6 +273,7 @@ export class SimpleWeatherCard extends LitElement {
 
   private renderInfo(attr: string): TemplateResult | string {
     if (attr === "extrema") return this.renderExtrema();
+    if (attr === "wind_bearing") return this.renderWindBearing();
     return html`
       <span class="weather__info__item">
         <div
@@ -282,6 +283,23 @@ export class SimpleWeatherCard extends LitElement {
           )})"
         ></div>
         ${this.renderAttr(attr)}
+      </span>
+    `;
+  }
+
+  private renderWindBearing(): TemplateResult | string {
+    const label = this.renderAttr("wind_bearing");
+    if (!label) return "";
+    const deg = this.weather?.wind_bearing_deg;
+    return html`
+      <span class="weather__info__item">
+        ${deg !== undefined
+          ? html`<svg class="weather__icon--arrow" viewBox="0 0 24 24" style="transform: rotate(${deg}deg)">
+              <path fill="currentColor" d="M12,2L4.5,20.29L5.21,21L12,18L18.79,21L19.5,20.29L12,2Z"/>
+            </svg>`
+          : html`<div class="weather__icon weather__icon--small" style="background-image: url(${this.weather?.getIcon("windy")})"></div>`
+        }
+        ${label}
       </span>
     `;
   }
