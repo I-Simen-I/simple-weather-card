@@ -105,6 +105,7 @@ export default function getStyles(): CSSResult {
       height: 28px;
       width: 28px;
       flex: 0 0 28px;
+      margin-right: 0;
     }
     .weather__forecast__temp {
       font-size: 0.8em;
