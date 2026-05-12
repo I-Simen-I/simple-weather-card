@@ -91,11 +91,11 @@ const TAP_ACTION_SCHEMA = [
 ];
 
 const BACKDROP_SCHEMA = [
-    { name: "bg", selector: { boolean: {} } },
-    { name: "fade", selector: { boolean: {} } },
-    { name: "day", selector: { text: {} } },
-    { name: "night", selector: { text: {} } },
-    { name: "text", selector: { text: {} } },
+  { name: "bg", selector: { boolean: {} } },
+  { name: "fade", selector: { boolean: {} } },
+  { name: "day", selector: { color_rgb: {} } },
+  { name: "night", selector: { color_rgb: {} } },
+  { name: "text", selector: { text: {} } },
 ];
 
 const LABELS: Record<string, string> = {
@@ -114,6 +114,14 @@ const LABELS: Record<string, string> = {
   text: "Text color",
   fade: "Fade effect",
 };
+
+const hexToRgb = (hex: string): [number, number, number] => {
+  const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return m ? [parseInt(m[1], 16), parseInt(m[2], 16), parseInt(m[3], 16)] : [0, 0, 0];
+};
+
+const rgbToHex = ([r, g, b]: [number, number, number]): string =>
+  "#" + [r, g, b].map((v) => v.toString(16).padStart(2, "0")).join("");
 
 const toArray = (val: string | string[] | undefined, fallback: string[]) =>
   val === undefined ? fallback : typeof val === "string" ? [val] : val;
@@ -170,12 +178,15 @@ export class SimpleWeatherCardEditor extends LitElement {
   }
 
   private _backdropChanged(ev: CustomEvent): void {
+    const val = ev.detail.value as Record<string, unknown>;
+    const backdrop = {
+      ...this._config?.backdrop,
+      ...val,
+      ...(Array.isArray(val.day) && { day: rgbToHex(val.day as [number, number, number]) }),
+      ...(Array.isArray(val.night) && { night: rgbToHex(val.night as [number, number, number]) }),
+    };
     fireEvent(this, "config-changed", {
-      config: {
-        ...this._config,
-        backdrop: { ...this._config?.backdrop, ...ev.detail.value },
-        custom: mapToCustom(this._customMap),
-      },
+      config: { ...this._config, backdrop, custom: mapToCustom(this._customMap) },
     });
   }
 
@@ -280,7 +291,11 @@ export class SimpleWeatherCardEditor extends LitElement {
         <div class="section-content">
           <ha-form
             .hass=${this.hass}
-            .data=${this._config?.backdrop ?? {}}
+            .data=${{
+              ...this._config?.backdrop,
+              day: hexToRgb(this._config?.backdrop?.day ?? "#45aaf2"),
+              night: hexToRgb(this._config?.backdrop?.night ?? "#a55eea"),
+            }}
             .schema=${BACKDROP_SCHEMA}
             .computeLabel=${this._computeLabel}
             @value-changed=${this._backdropChanged}
