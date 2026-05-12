@@ -190,6 +190,13 @@ export class SimpleWeatherCardEditor extends LitElement {
         .computeLabel=${this._computeLabel}
         @value-changed=${this._valueChanged}
       ></ha-form>
+      <ha-form
+          .hass=${this.hass}
+          .data=${this._config}
+          .schema=${FORECAST_SCHEMA}
+          .computeLabel=${this._computeLabel}
+          @value-changed=${this._valueChanged}
+      ></ha-form>
       <ha-expansion-panel outlined>
         <span slot="header"
           ><ha-icon icon="mdi:format-header-1"></ha-icon> Name</span
@@ -232,13 +239,6 @@ export class SimpleWeatherCardEditor extends LitElement {
           ></ha-form>
         </div>
       </ha-expansion-panel>
-      <ha-form
-        .hass=${this.hass}
-        .data=${this._config}
-        .schema=${FORECAST_SCHEMA}
-        .computeLabel=${this._computeLabel}
-        @value-changed=${this._valueChanged}
-      ></ha-form>
       <ha-expansion-panel outlined>
         <span slot="header"
           ><ha-icon icon="mdi:gesture-tap"></ha-icon> Tap action</span

@@ -32,6 +32,7 @@ export interface HassConfig {
 export interface HomeAssistant {
   states: Record<string, HassEntity>;
   config: HassConfig;
+  locale: { language: string };
   localize: (key: string, ...args: unknown[]) => string;
   resources: Record<string, Record<string, string>>;
   connection: {

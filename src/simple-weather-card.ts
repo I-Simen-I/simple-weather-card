@@ -289,8 +289,9 @@ export class SimpleWeatherCard extends LitElement {
       <div class="weather__forecast">
         ${days.map((day) => {
           const date = day.datetime ? new Date(day.datetime) : null;
+          const lang = this.hass.locale.language;
           const dayName = date
-            ? date.toLocaleDateString(undefined, { weekday: "short" })
+            ? date.toLocaleDateString(lang, { weekday: "short" })
             : "";
           const icon = day.condition
             ? this.weather?.getIcon(day.condition)
@@ -305,10 +306,10 @@ export class SimpleWeatherCard extends LitElement {
                   ></div>`
                 : ""}
               <span class="weather__forecast__temp weather__forecast__temp--high">
-                ${day.temperature !== undefined ? Math.round(day.temperature) : "--"}${tempUnit}
+                ${day.temperature !== undefined ? day.temperature.toFixed(1) : "--"}${tempUnit}
               </span>
               <span class="weather__forecast__temp weather__forecast__temp--low">
-                ${day.templow !== undefined ? Math.round(day.templow) : "--"}${tempUnit}
+                ${day.templow !== undefined ? day.templow.toFixed(1) : "--"}${tempUnit}
               </span>
             </div>
           `;
