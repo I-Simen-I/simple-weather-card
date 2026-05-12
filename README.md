@@ -8,6 +8,10 @@ A clean, highly configurable weather card for the [Home Assistant](https://githu
 
 ![Preview](https://user-images.githubusercontent.com/457678/53588519-61dfdf80-3b8d-11e9-9f0d-f5995ba794ce.png)
 
+### Forecast
+
+![Forecast](/images/forecast.png)
+
 
 ## Migration from Original Repository
 
