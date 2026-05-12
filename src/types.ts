@@ -96,6 +96,7 @@ export interface CardConfig {
   backdrop?: Partial<BackdropConfig>;
   show_forecast?: boolean;
   forecast_type?: "daily" | "hourly";
+  compact?: boolean;
   card_mod?: CardModConfig;
   uix?: UixConfig;
 }
@@ -111,6 +112,7 @@ export interface NormalizedConfig {
   backdrop: BackdropConfig;
   show_forecast: boolean;
   forecast_type: "daily" | "hourly";
+  compact: boolean;
   card_mod?: CardModConfig;
   uix?: UixConfig;
 }

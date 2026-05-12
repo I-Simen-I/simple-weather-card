@@ -162,6 +162,7 @@ export class SimpleWeatherCard extends LitElement {
       },
       show_forecast: config.show_forecast ?? false,
       forecast_type: config.forecast_type ?? "daily",
+      compact: config.compact ?? false,
       card_mod: config.card_mod,
       uix: config.uix,
     };
@@ -214,6 +215,7 @@ export class SimpleWeatherCard extends LitElement {
         ?bg=${this.config.backdrop.bg}
         ?fade=${this.config.backdrop.fade}
         ?night=${this.weather?.isNight}
+        ?compact=${this.config.compact}
         style="--day-color: ${this.config.backdrop.day}; --night-color: ${this
           .config.backdrop.night}; --text-color: ${this.config.backdrop.text};"
         @click=${() => this.handleTap()}
@@ -228,12 +230,16 @@ export class SimpleWeatherCard extends LitElement {
               ${this.renderAttr("state", false)}
             </span>
           </div>
-          <div class="weather__info weather__info--add">
-            ${this.renderInfoRow(this.config.primary_info)}
-            ${this.renderInfoRow(this.config.secondary_info)}
-          </div>
+          ${!this.config.compact
+            ? html`<div class="weather__info weather__info--add">
+                ${this.renderInfoRow(this.config.primary_info)}
+                ${this.renderInfoRow(this.config.secondary_info)}
+              </div>`
+            : ""}
         </div>
-        ${this.config.show_forecast ? this.renderForecast() : ""}
+        ${this.config.show_forecast && !this.config.compact
+          ? this.renderForecast()
+          : ""}
       </ha-card>
     `;
   }

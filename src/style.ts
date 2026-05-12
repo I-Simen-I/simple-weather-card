@@ -114,5 +114,16 @@ export default function getStyles(): CSSResult {
     .weather__forecast__temp--low {
       opacity: 0.6;
     }
+    ha-card[compact] {
+      padding: 10px 16px;
+    }
+    ha-card[compact] .weather__icon {
+      height: 32px;
+      width: 32px;
+      flex: 0 0 32px;
+    }
+    ha-card[compact] .weather__info {
+      min-height: 0;
+    }
   `;
 }

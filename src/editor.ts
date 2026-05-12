@@ -64,6 +64,10 @@ const SECONDARY_INFO_SCHEMA = [
   },
 ];
 
+const DISPLAY_SCHEMA = [
+  { name: "compact", selector: { boolean: {} } },
+];
+
 const FORECAST_SCHEMA = [
   { name: "show_forecast", selector: { boolean: {} } },
   {
@@ -102,6 +106,7 @@ const LABELS: Record<string, string> = {
   entity: "Weather entity",
   name: "Name",
   show_name: "Show name",
+  compact: "Compact mode",
   show_forecast: "Show forecast",
   forecast_type: "Forecast type",
   tap_action: "Tap action",
@@ -199,6 +204,13 @@ export class SimpleWeatherCardEditor extends LitElement {
         .hass=${this.hass}
         .data=${this._config}
         .schema=${ENTITY_SCHEMA}
+        .computeLabel=${this._computeLabel}
+        @value-changed=${this._valueChanged}
+      ></ha-form>
+      <ha-form
+        .hass=${this.hass}
+        .data=${this._config}
+        .schema=${DISPLAY_SCHEMA}
         .computeLabel=${this._computeLabel}
         @value-changed=${this._valueChanged}
       ></ha-form>
