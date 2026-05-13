@@ -60,15 +60,17 @@ If you're migrating from the [original repository](https://github.com/kalkih/sim
 
 #### Weather attributes
 
-| Name                      | Description                       |
-|---------------------------|-----------------------------------|
-| extrema                   | Forecast high and low temperature |
-| precipitation             | Forecast precipitation            |
-| precipitation_probability | Probability of precipitation      |
-| humidity                  | Current humidity                  |
-| wind_speed                | Current wind speed                |
-| wind_bearing              | Current wind direction            |
-| pressure                  | Current air pressure              |
+| Name                          | Description                                           | Since  |
+|-------------------------------|-------------------------------------------------------|--------|
+| extrema                       | Forecast high and low temperature                     | v0.7.0 |
+| precipitation_and_probability | Forecast precipitation + Probability of precipitation | v2.7.0 |
+| precipitation                 | Forecast precipitation                                | v0.7.0 |
+| precipitation_probability     | Probability of precipitation                          | v0.7.0 |
+| humidity                      | Current humidity                                      | v0.7.0 |
+| wind                          | Current wind speed + direction                        | v2.7.0 |
+| wind_speed                    | Current wind speed                                    | v0.7.0 |
+| wind_bearing                  | Current wind direction                                | v0.7.0 |
+| pressure                      | Current air pressure                                  | v0.7.0 |
 
 #### Backdrop object options
 
