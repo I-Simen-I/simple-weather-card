@@ -100,6 +100,10 @@ const BACKDROP_SCHEMA = [
   { name: "text", selector: { color_rgb: {} } },
 ];
 
+const ICONS_SCHEMA = [
+  { name: "animated_icons", selector: { boolean: {} } },
+];
+
 const LABELS: Record<string, string> = {
   entity: "Weather entity",
   name: "Name",
@@ -115,6 +119,7 @@ const LABELS: Record<string, string> = {
   night: "Night color",
   text: "Text color",
   fade: "Fade effect",
+  animated_icons: "Animated icons",
 };
 
 const hexToRgb = (hex: string): [number, number, number] => {
@@ -314,6 +319,18 @@ export class SimpleWeatherCardEditor extends LitElement {
             .schema=${BACKDROP_SCHEMA}
             .computeLabel=${this._computeLabel}
             @value-changed=${this._backdropChanged}
+          ></ha-form>
+        </div>
+      </ha-expansion-panel>
+      <ha-expansion-panel outlined>
+        <span slot="header"><ha-icon icon="mdi:animation"></ha-icon> Icons</span>
+        <div class="section-content">
+          <ha-form
+            .hass=${this.hass}
+            .data=${this._config}
+            .schema=${ICONS_SCHEMA}
+            .computeLabel=${this._computeLabel}
+            @value-changed=${this._valueChanged}
           ></ha-form>
         </div>
       </ha-expansion-panel>

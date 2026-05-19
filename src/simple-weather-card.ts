@@ -162,6 +162,7 @@ export class SimpleWeatherCard extends LitElement {
       },
       show_forecast: config.show_forecast ?? false,
       forecast_type: config.forecast_type ?? "daily",
+      animated_icons: config.animated_icons ?? false,
       card_mod: config.card_mod,
       uix: config.uix,
     };
@@ -238,10 +239,21 @@ export class SimpleWeatherCard extends LitElement {
     `;
   }
 
+  private _getIcon(iconName: string): string {
+    if (this.config.animated_icons) {
+      return this.weather?.getAnimatedIcon(iconName) ?? "";
+    }
+    return this.weather?.getIcon(iconName) ?? "";
+  }
+
+  private _getStateIcon(): string | undefined {
+    return this.config.animated_icons ? this.weather?.iconAnimated : this.weather?.icon;
+  }
+
   private renderIcon(): TemplateResult | string {
     const icon = this.custom["icon-state"]
-      ? this.weather?.getIcon(this.custom["icon-state"].state)
-      : this.weather?.icon;
+      ? this._getIcon(this.custom["icon-state"].state)
+      : this._getStateIcon();
     return this.weather?.hasState && icon
       ? html`<div
           class="weather__icon"
@@ -258,7 +270,7 @@ export class SimpleWeatherCard extends LitElement {
           <span class="weather__info__item">
             <div
               class="weather__icon weather__icon--small"
-              style="background-image: url(${this.weather?.getIcon("rainy")})"
+              style="background-image: url(${this._getIcon("rainy")})"
             ></div>
             ${this.renderAttr("precipitation")}${precip && prob ? html` / ${this.renderAttr("precipitation_probability")}` : ""}
           </span>
@@ -274,7 +286,7 @@ export class SimpleWeatherCard extends LitElement {
           <span class="weather__info__item">
             <div
               class="weather__icon weather__icon--small"
-              style="background-image: url(${this.weather?.getIcon("windy")})"
+              style="background-image: url(${this._getIcon("windy")})"
             ></div>
             ${this.renderAttr("wind_speed")}${speed && bearing ? html`(${this.renderAttr("wind_bearing")})` : ""}
           </span>
@@ -311,9 +323,7 @@ export class SimpleWeatherCard extends LitElement {
       <span class="weather__info__item">
         <div
           class="weather__icon weather__icon--small"
-          style="background-image: url(${this.weather?.getIcon(
-            INFO[attr].icon,
-          )})"
+          style="background-image: url(${this._getIcon(INFO[attr].icon)})"
         ></div>
         ${this.renderAttr(attr)}
       </span>
@@ -337,7 +347,7 @@ export class SimpleWeatherCard extends LitElement {
               : date.toLocaleDateString(lang, { weekday: "short" })
             : "";
           const icon = entry.condition
-            ? this.weather?.getIcon(entry.condition)
+            ? this._getIcon(entry.condition)
             : undefined;
           return html`
             <div class="weather__forecast__day">
