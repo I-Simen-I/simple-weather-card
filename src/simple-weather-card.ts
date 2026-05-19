@@ -279,7 +279,7 @@ export class SimpleWeatherCard extends LitElement {
           <span class="weather__info__item">
             <div
               class="weather__icon weather__icon--small"
-              style="background-image: url(${this._getIcon("rainy")})"
+              style="background-image: url(${this.weather?.getIcon("rainy")})"
             ></div>
             ${this.renderAttr("precipitation")}${precip && prob
               ? html` / ${this.renderAttr("precipitation_probability")}`
@@ -300,7 +300,7 @@ export class SimpleWeatherCard extends LitElement {
           <span class="weather__info__item">
             <div
               class="weather__icon weather__icon--small"
-              style="background-image: url(${this._getIcon("windy")})"
+              style="background-image: url(${this.weather?.getIcon("windy")})"
             ></div>
             ${this.renderAttr("wind_speed")}${speed && bearing
               ? html`(${this.renderAttr("wind_bearing")})`
@@ -340,7 +340,7 @@ export class SimpleWeatherCard extends LitElement {
       <span class="weather__info__item">
         <div
           class="weather__icon weather__icon--small"
-          style="background-image: url(${this._getIcon(INFO[attr].icon)})"
+          style="background-image: url(${this.weather?.getIcon(INFO[attr].icon)})"
         ></div>
         ${this.renderAttr(attr)}
       </span>
