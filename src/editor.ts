@@ -11,7 +11,10 @@ const fireEvent = (node: EventTarget, type: string, detail?: unknown): void => {
 
 const INFO_OPTIONS = [
   { value: "extrema", label: "Low / High" },
-  { value: "precipitation_and_probability", label: "Precipitation (Amount / Probability)" },
+  {
+    value: "precipitation_and_probability",
+    label: "Precipitation (Amount / Probability)",
+  },
   { value: "precipitation", label: "Precipitation" },
   { value: "precipitation_probability", label: "Precipitation probability" },
   { value: "humidity", label: "Humidity" },
@@ -100,9 +103,7 @@ const BACKDROP_SCHEMA = [
   { name: "text", selector: { color_rgb: {} } },
 ];
 
-const ICONS_SCHEMA = [
-  { name: "animated_icons", selector: { boolean: {} } },
-];
+const ICONS_SCHEMA = [{ name: "animated_icons", selector: { boolean: {} } }];
 
 const LABELS: Record<string, string> = {
   entity: "Weather entity",
@@ -124,7 +125,9 @@ const LABELS: Record<string, string> = {
 
 const hexToRgb = (hex: string): [number, number, number] => {
   const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  return m ? [parseInt(m[1], 16), parseInt(m[2], 16), parseInt(m[3], 16)] : [0, 0, 0];
+  return m
+    ? [parseInt(m[1], 16), parseInt(m[2], 16), parseInt(m[3], 16)]
+    : [0, 0, 0];
 };
 
 const rgbToHex = ([r, g, b]: [number, number, number]): string =>
@@ -136,7 +139,8 @@ const resolveTextColor = (text?: string): [number, number, number] => {
     .getPropertyValue("--primary-text-color")
     .trim();
   const hex = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(raw);
-  if (hex) return [parseInt(hex[1], 16), parseInt(hex[2], 16), parseInt(hex[3], 16)];
+  if (hex)
+    return [parseInt(hex[1], 16), parseInt(hex[2], 16), parseInt(hex[3], 16)];
   const rgb = /rgb\(\s*(\d+),\s*(\d+),\s*(\d+)\s*\)/.exec(raw);
   if (rgb) return [parseInt(rgb[1]), parseInt(rgb[2]), parseInt(rgb[3])];
   return [255, 255, 255];
@@ -192,7 +196,11 @@ export class SimpleWeatherCardEditor extends LitElement {
 
   private _valueChanged(ev: CustomEvent): void {
     fireEvent(this, "config-changed", {
-      config: { ...this._config, ...ev.detail.value, custom: mapToCustom(this._customMap) },
+      config: {
+        ...this._config,
+        ...ev.detail.value,
+        custom: mapToCustom(this._customMap),
+      },
     });
   }
 
@@ -201,11 +209,22 @@ export class SimpleWeatherCardEditor extends LitElement {
     const backdrop = {
       ...this._config?.backdrop,
       ...val,
-      ...(Array.isArray(val.day) && { day: rgbToHex(val.day as [number, number, number]) }),
-      ...(Array.isArray(val.night) && { night: rgbToHex(val.night as [number, number, number]) }),
-      ...(Array.isArray(val.text) && { text: rgbToHex(val.text as [number, number, number]) }),    };
+      ...(Array.isArray(val.day) && {
+        day: rgbToHex(val.day as [number, number, number]),
+      }),
+      ...(Array.isArray(val.night) && {
+        night: rgbToHex(val.night as [number, number, number]),
+      }),
+      ...(Array.isArray(val.text) && {
+        text: rgbToHex(val.text as [number, number, number]),
+      }),
+    };
     fireEvent(this, "config-changed", {
-      config: { ...this._config, backdrop, custom: mapToCustom(this._customMap) },
+      config: {
+        ...this._config,
+        backdrop,
+        custom: mapToCustom(this._customMap),
+      },
     });
   }
 
@@ -249,7 +268,8 @@ export class SimpleWeatherCardEditor extends LitElement {
       </ha-expansion-panel>
       <ha-expansion-panel outlined>
         <span slot="header"
-          ><ha-icon icon="mdi:format-list-bulleted"></ha-icon> Primary info</span
+          ><ha-icon icon="mdi:format-list-bulleted"></ha-icon> Primary
+          info</span
         >
         <div class="section-content">
           <ha-form
@@ -263,7 +283,8 @@ export class SimpleWeatherCardEditor extends LitElement {
       </ha-expansion-panel>
       <ha-expansion-panel outlined>
         <span slot="header"
-          ><ha-icon icon="mdi:format-list-bulleted"></ha-icon> Secondary info</span
+          ><ha-icon icon="mdi:format-list-bulleted"></ha-icon> Secondary
+          info</span
         >
         <div class="section-content">
           <ha-form
@@ -305,7 +326,7 @@ export class SimpleWeatherCardEditor extends LitElement {
       </ha-expansion-panel>
       <ha-expansion-panel outlined>
         <span slot="header"
-        ><ha-icon icon="mdi:palette"></ha-icon> Backdrop</span
+          ><ha-icon icon="mdi:palette"></ha-icon> Backdrop</span
         >
         <div class="section-content">
           <ha-form
@@ -323,7 +344,9 @@ export class SimpleWeatherCardEditor extends LitElement {
         </div>
       </ha-expansion-panel>
       <ha-expansion-panel outlined>
-        <span slot="header"><ha-icon icon="mdi:animation"></ha-icon> Icons</span>
+        <span slot="header"
+          ><ha-icon icon="mdi:animation"></ha-icon> Icons</span
+        >
         <div class="section-content">
           <ha-form
             .hass=${this.hass}
@@ -335,7 +358,9 @@ export class SimpleWeatherCardEditor extends LitElement {
         </div>
       </ha-expansion-panel>
       <ha-expansion-panel outlined>
-        <span slot="header"><ha-icon icon="mdi:cog"></ha-icon> Custom sensor overrides</span>
+        <span slot="header"
+          ><ha-icon icon="mdi:cog"></ha-icon> Custom sensor overrides</span
+        >
         <div class="custom-content">
           ${CUSTOM_KEYS.map(
             ({ key, label }) => html`

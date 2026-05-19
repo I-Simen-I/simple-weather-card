@@ -14,7 +14,6 @@ import sunny from "../icons/sunny.png";
 import windy from "../icons/windy.svg";
 import humidity from "../icons/humidity.svg";
 import pressure from "../icons/pressure.svg";
-
 import animated_clear_night from "../icons/animated/clear-night.svg";
 import animated_cloudy from "../icons/animated/cloudy.svg";
 import animated_fog from "../icons/animated/fog.svg";
