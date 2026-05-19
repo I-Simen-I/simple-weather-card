@@ -349,9 +349,7 @@ export class SimpleWeatherCard extends LitElement {
 
   private renderForecast(): TemplateResult {
     const isHourly = this.config.forecast_type === "hourly";
-    const entries = isHourly
-      ? this._forecast.slice(0, 5)
-      : this._forecast.slice(1, 6);
+    const entries = this._forecast.slice(0, 5);
     const tempUnit = this.getUnit("temperature");
     const lang = this.hass.locale.language;
     return html`
