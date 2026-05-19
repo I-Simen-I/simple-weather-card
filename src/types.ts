@@ -91,6 +91,7 @@ export interface CardConfig {
   show_name?: boolean;
   primary_info?: string | string[];
   secondary_info?: string | string[];
+  state_content?: string;
   custom?: Array<Record<string, string>>;
   tap_action?: TapAction;
   backdrop?: Partial<BackdropConfig>;
@@ -107,6 +108,7 @@ export interface NormalizedConfig {
   show_name: boolean;
   primary_info: string[];
   secondary_info: string[];
+  state_content: string;
   custom: Array<Record<string, string>>;
   tap_action: TapAction;
   backdrop: BackdropConfig;

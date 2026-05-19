@@ -150,6 +150,7 @@ export class SimpleWeatherCard extends LitElement {
       show_name: config.show_name ?? true,
       primary_info: toArray(config.primary_info, ["extrema"]),
       secondary_info: toArray(config.secondary_info, ["precipitation"]),
+      state_content: config.state_content ?? "state",
       custom: config.custom ?? [],
       tap_action: config.tap_action ?? { action: "more-info" },
       backdrop: {
@@ -229,7 +230,7 @@ export class SimpleWeatherCard extends LitElement {
               ${this.config.show_name ? this.name : ""}
             </span>
             <span class="weather__info__state">
-              ${this.renderAttr("state", false)}
+              ${this.renderStateContent()}
             </span>
           </div>
           <div class="weather__info weather__info--add">
@@ -321,6 +322,12 @@ export class SimpleWeatherCard extends LitElement {
           </span>
         `
       : "";
+  }
+
+  private renderStateContent(): TemplateResult | string {
+    const attr = this.config.state_content;
+    if (attr === "state") return html`${this.renderAttr("state", false)}`;
+    return html`${this.renderInfo(attr)}`;
   }
 
   private renderInfoRow(attrs: string[]): TemplateResult {

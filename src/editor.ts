@@ -69,6 +69,20 @@ const SECONDARY_INFO_SCHEMA = [
   },
 ];
 
+const STATE_CONTENT_OPTIONS = [
+  { value: "state", label: "Weather condition" },
+  ...INFO_OPTIONS,
+];
+
+const STATE_CONTENT_SCHEMA = [
+  {
+    name: "state_content",
+    selector: {
+      select: { multiple: false, mode: "list", options: STATE_CONTENT_OPTIONS },
+    },
+  },
+];
+
 const FORECAST_SCHEMA = [
   { name: "show_forecast", selector: { boolean: {} } },
   {
@@ -121,6 +135,7 @@ const LABELS: Record<string, string> = {
   text: "Text color",
   fade: "Fade effect",
   animated_icons: "Animated icons",
+  state_content: "State content",
 };
 
 const hexToRgb = (hex: string): [number, number, number] => {
@@ -190,6 +205,7 @@ export class SimpleWeatherCardEditor extends LitElement {
       tap_action: config.tap_action ?? { action: "more-info" },
       primary_info: toArray(config.primary_info, ["extrema"]),
       secondary_info: toArray(config.secondary_info, ["precipitation"]),
+      state_content: config.state_content ?? "state",
       forecast_type: config.forecast_type ?? "daily",
     };
   }
@@ -261,6 +277,20 @@ export class SimpleWeatherCardEditor extends LitElement {
             .hass=${this.hass}
             .data=${this._config}
             .schema=${NAME_SCHEMA}
+            .computeLabel=${this._computeLabel}
+            @value-changed=${this._valueChanged}
+          ></ha-form>
+        </div>
+      </ha-expansion-panel>
+      <ha-expansion-panel outlined>
+        <span slot="header"
+          ><ha-icon icon="mdi:text"></ha-icon> State info</span
+        >
+        <div class="section-content">
+          <ha-form
+            .hass=${this.hass}
+            .data=${this._config}
+            .schema=${STATE_CONTENT_SCHEMA}
             .computeLabel=${this._computeLabel}
             @value-changed=${this._valueChanged}
           ></ha-form>
