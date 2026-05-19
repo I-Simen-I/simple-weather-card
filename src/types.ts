@@ -91,11 +91,13 @@ export interface CardConfig {
   show_name?: boolean;
   primary_info?: string | string[];
   secondary_info?: string | string[];
+  state_content?: string;
   custom?: Array<Record<string, string>>;
   tap_action?: TapAction;
   backdrop?: Partial<BackdropConfig>;
   show_forecast?: boolean;
   forecast_type?: "daily" | "hourly";
+  animated_icons?: boolean;
   card_mod?: CardModConfig;
   uix?: UixConfig;
 }
@@ -106,11 +108,13 @@ export interface NormalizedConfig {
   show_name: boolean;
   primary_info: string[];
   secondary_info: string[];
+  state_content: string;
   custom: Array<Record<string, string>>;
   tap_action: TapAction;
   backdrop: BackdropConfig;
   show_forecast: boolean;
   forecast_type: "daily" | "hourly";
+  animated_icons: boolean;
   card_mod?: CardModConfig;
   uix?: UixConfig;
 }

@@ -20,14 +20,14 @@ const config = [
     ignores: ["node_modules/", "dist/"],
   },
   ...compat.extends("plugin:@typescript-eslint/recommended", "prettier"),
-  ...compat.plugins("prettier", "import"),
+  ...compat.plugins("prettier", "import-x"),
   {
     rules: {
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/ban-ts-comment": "off",
       "no-console": "off",
       "prettier/prettier": "warn",
-      "import/order": [
+      "import-x/order": [
         "warn",
         {
           groups: [

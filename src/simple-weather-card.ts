@@ -150,6 +150,7 @@ export class SimpleWeatherCard extends LitElement {
       show_name: config.show_name ?? true,
       primary_info: toArray(config.primary_info, ["extrema"]),
       secondary_info: toArray(config.secondary_info, ["precipitation"]),
+      state_content: config.state_content ?? "state",
       custom: config.custom ?? [],
       tap_action: config.tap_action ?? { action: "more-info" },
       backdrop: {
@@ -162,6 +163,7 @@ export class SimpleWeatherCard extends LitElement {
       },
       show_forecast: config.show_forecast ?? false,
       forecast_type: config.forecast_type ?? "daily",
+      animated_icons: config.animated_icons ?? false,
       card_mod: config.card_mod,
       uix: config.uix,
     };
@@ -184,7 +186,9 @@ export class SimpleWeatherCard extends LitElement {
 
   private _applyCardMod(): void {
     customElements.whenDefined("card-mod").then((CardMod: unknown) => {
-      (CardMod as { applyToElement: (...args: unknown[]) => void }).applyToElement(
+      (
+        CardMod as { applyToElement: (...args: unknown[]) => void }
+      ).applyToElement(
         this,
         "card",
         this.config.card_mod,
@@ -222,10 +226,11 @@ export class SimpleWeatherCard extends LitElement {
           ${this.renderIcon()}
           <div class="weather__info">
             <span class="weather__info__title">
-              ${this.renderAttr("temp")} ${this.config.show_name ? this.name : ""}
+              ${this.renderAttr("temp")}
+              ${this.config.show_name ? this.name : ""}
             </span>
             <span class="weather__info__state">
-              ${this.renderAttr("state", false)}
+              ${this.renderStateContent()}
             </span>
           </div>
           <div class="weather__info weather__info--add">
@@ -238,10 +243,23 @@ export class SimpleWeatherCard extends LitElement {
     `;
   }
 
+  private _getIcon(iconName: string): string {
+    if (this.config.animated_icons) {
+      return this.weather?.getAnimatedIcon(iconName) ?? "";
+    }
+    return this.weather?.getIcon(iconName) ?? "";
+  }
+
+  private _getStateIcon(): string | undefined {
+    return this.config.animated_icons
+      ? this.weather?.iconAnimated
+      : this.weather?.icon;
+  }
+
   private renderIcon(): TemplateResult | string {
     const icon = this.custom["icon-state"]
-      ? this.weather?.getIcon(this.custom["icon-state"].state)
-      : this.weather?.icon;
+      ? this._getIcon(this.custom["icon-state"].state)
+      : this._getStateIcon();
     return this.weather?.hasState && icon
       ? html`<div
           class="weather__icon"
@@ -251,8 +269,12 @@ export class SimpleWeatherCard extends LitElement {
   }
 
   private renderPrecipitation(): TemplateResult | string {
-    const precip = this.custom.precipitation?.state ?? this.weather?.getAttribute("precipitation");
-    const prob = this.custom.precipitation_probability?.state ?? this.weather?.getAttribute("precipitation_probability");
+    const precip =
+      this.custom.precipitation?.state ??
+      this.weather?.getAttribute("precipitation");
+    const prob =
+      this.custom.precipitation_probability?.state ??
+      this.weather?.getAttribute("precipitation_probability");
     return precip || prob
       ? html`
           <span class="weather__info__item">
@@ -260,15 +282,20 @@ export class SimpleWeatherCard extends LitElement {
               class="weather__icon weather__icon--small"
               style="background-image: url(${this.weather?.getIcon("rainy")})"
             ></div>
-            ${this.renderAttr("precipitation")}${precip && prob ? html` / ${this.renderAttr("precipitation_probability")}` : ""}
+            ${this.renderAttr("precipitation")}${precip && prob
+              ? html` / ${this.renderAttr("precipitation_probability")}`
+              : ""}
           </span>
         `
       : "";
   }
 
   private renderWind(): TemplateResult | string {
-    const speed = this.custom.wind_speed?.state ?? this.weather?.getAttribute("wind_speed");
-    const bearing = this.custom.wind_bearing?.state ?? this.weather?.getAttribute("wind_bearing");
+    const speed =
+      this.custom.wind_speed?.state ?? this.weather?.getAttribute("wind_speed");
+    const bearing =
+      this.custom.wind_bearing?.state ??
+      this.weather?.getAttribute("wind_bearing");
     return speed || bearing
       ? html`
           <span class="weather__info__item">
@@ -276,7 +303,9 @@ export class SimpleWeatherCard extends LitElement {
               class="weather__icon weather__icon--small"
               style="background-image: url(${this.weather?.getIcon("windy")})"
             ></div>
-            ${this.renderAttr("wind_speed")}${speed && bearing ? html`(${this.renderAttr("wind_bearing")})` : ""}
+            ${this.renderAttr("wind_speed")}${speed && bearing
+              ? html`(${this.renderAttr("wind_bearing")})`
+              : ""}
           </span>
         `
       : "";
@@ -295,6 +324,12 @@ export class SimpleWeatherCard extends LitElement {
       : "";
   }
 
+  private renderStateContent(): TemplateResult | string {
+    const attr = this.config.state_content;
+    if (attr === "state") return html`${this.renderAttr("state", false)}`;
+    return html`${this.renderInfo(attr)}`;
+  }
+
   private renderInfoRow(attrs: string[]): TemplateResult {
     return html`
       <div class="weather__info__row">
@@ -305,15 +340,14 @@ export class SimpleWeatherCard extends LitElement {
 
   private renderInfo(attr: string): TemplateResult | string {
     if (attr === "extrema") return this.renderExtrema();
-    if (attr === "precipitation_and_probability") return this.renderPrecipitation();
+    if (attr === "precipitation_and_probability")
+      return this.renderPrecipitation();
     if (attr === "wind") return this.renderWind();
     return html`
       <span class="weather__info__item">
         <div
           class="weather__icon weather__icon--small"
-          style="background-image: url(${this.weather?.getIcon(
-            INFO[attr].icon,
-          )})"
+          style="background-image: url(${this.weather?.getIcon(INFO[attr].icon)})"
         ></div>
         ${this.renderAttr(attr)}
       </span>
@@ -322,9 +356,7 @@ export class SimpleWeatherCard extends LitElement {
 
   private renderForecast(): TemplateResult {
     const isHourly = this.config.forecast_type === "hourly";
-    const entries = isHourly
-      ? this._forecast.slice(0, 5)
-      : this._forecast.slice(1, 6);
+    const entries = this._forecast.slice(0, 5);
     const tempUnit = this.getUnit("temperature");
     const lang = this.hass.locale.language;
     return html`
@@ -333,11 +365,15 @@ export class SimpleWeatherCard extends LitElement {
           const date = entry.datetime ? new Date(entry.datetime) : null;
           const label = date
             ? isHourly
-              ? date.toLocaleTimeString(lang, { hour: "2-digit", minute: "2-digit", hour12: false })
+              ? date.toLocaleTimeString(lang, {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  hour12: false,
+                })
               : date.toLocaleDateString(lang, { weekday: "short" })
             : "";
           const icon = entry.condition
-            ? this.weather?.getIcon(entry.condition)
+            ? this._getIcon(entry.condition)
             : undefined;
           return html`
             <div class="weather__forecast__day">
@@ -348,12 +384,20 @@ export class SimpleWeatherCard extends LitElement {
                     style="background-image: url(${icon})"
                   ></div>`
                 : ""}
-              <span class="weather__forecast__temp weather__forecast__temp--high">
-                ${entry.temperature !== undefined ? entry.temperature.toFixed(1) : "--"}${tempUnit}
+              <span
+                class="weather__forecast__temp weather__forecast__temp--high"
+              >
+                ${entry.temperature !== undefined
+                  ? entry.temperature.toFixed(1)
+                  : "--"}${tempUnit}
               </span>
               ${!isHourly
-                ? html`<span class="weather__forecast__temp weather__forecast__temp--low">
-                    ${entry.templow !== undefined ? entry.templow.toFixed(1) : "--"}${tempUnit}
+                ? html`<span
+                    class="weather__forecast__temp weather__forecast__temp--low"
+                  >
+                    ${entry.templow !== undefined
+                      ? entry.templow.toFixed(1)
+                      : "--"}${tempUnit}
                   </span>`
                 : ""}
             </div>
