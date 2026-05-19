@@ -65,6 +65,9 @@ export default function getStyles(): CSSResult {
       display: flex;
       align-items: center;
     }
+    .weather__info__state .weather__info__item {
+      padding-left: 0;
+    }
     .weather__info--add {
       padding-left: 8px;
       margin-left: auto;
