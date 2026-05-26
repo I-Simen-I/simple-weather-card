@@ -29,7 +29,7 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import-x": "^4.16.2",
     "eslint-plugin-prettier": "^5.5.5",
-    "lit": "^3.3.2",
+    "lit": "^3.3.3",
     "prettier": "^3.8.3",
     "ts-loader": "^9.5.0",
     "typescript": "^6.0.3",
