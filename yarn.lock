@@ -2102,7 +2102,7 @@ __metadata:
     eslint-plugin-prettier: "npm:^5.5.5"
     lit: "npm:^3.3.3"
     prettier: "npm:^3.8.3"
-    ts-loader: "npm:^9.5.0"
+    ts-loader: "npm:^9.6.1"
     typescript: "npm:^6.0.3"
     typescript-eslint: "npm:^8.61.0"
     webpack: "npm:^5.107.2"
@@ -2270,9 +2270,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-loader@npm:^9.5.0":
-  version: 9.5.7
-  resolution: "ts-loader@npm:9.5.7"
+"ts-loader@npm:^9.6.1":
+  version: 9.6.1
+  resolution: "ts-loader@npm:9.6.1"
   dependencies:
     chalk: "npm:^4.1.0"
     enhanced-resolve: "npm:^5.0.0"
@@ -2280,9 +2280,13 @@ __metadata:
     semver: "npm:^7.3.4"
     source-map: "npm:^0.7.4"
   peerDependencies:
+    loader-utils: "*"
     typescript: "*"
-    webpack: ^5.0.0
-  checksum: 10c0/e68d997962046afc40fbb6131a5f329128691917bf288d18df4f95719ca1557e72f614bf078e06544ab0c970f734495a356f3eeb5f11ca18459944237b3635a1
+    webpack: ^4.0.0 || ^5.0.0
+  peerDependenciesMeta:
+    loader-utils:
+      optional: true
+  checksum: 10c0/75c7e474e417a6ac965857491df8a759c3160fba9314ae8cf3e163825385858510f6e6b9b11ebe2987afd0924b6e08867f5abf055386d335ac566e9eaeec5468
   languageName: node
   linkType: hard
 
