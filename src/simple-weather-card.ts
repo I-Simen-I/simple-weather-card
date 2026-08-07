@@ -218,8 +218,9 @@ export class SimpleWeatherCard extends LitElement {
         ?bg=${this.config.backdrop.bg}
         ?fade=${this.config.backdrop.fade}
         ?night=${this.weather?.isNight}
-        style="--day-color: ${this.config.backdrop.day}; --night-color: ${this
-          .config.backdrop.night}; --text-color: ${this.config.backdrop.text};"
+        style="--day-color: ${this.config.backdrop.day}; --night-color: ${
+          this.config.backdrop.night
+        }; --text-color: ${this.config.backdrop.text};"
         @click=${() => this.handleTap()}
       >
         <div class="weather__main">
@@ -282,9 +283,11 @@ export class SimpleWeatherCard extends LitElement {
               class="weather__icon weather__icon--small"
               style="background-image: url(${this.weather?.getIcon("rainy")})"
             ></div>
-            ${this.renderAttr("precipitation")}${precip && prob
-              ? html` / ${this.renderAttr("precipitation_probability")}`
-              : ""}
+            ${this.renderAttr("precipitation")}${
+              precip && prob
+                ? html` / ${this.renderAttr("precipitation_probability")}`
+                : ""
+            }
           </span>
         `
       : "";
@@ -303,9 +306,9 @@ export class SimpleWeatherCard extends LitElement {
               class="weather__icon weather__icon--small"
               style="background-image: url(${this.weather?.getIcon("windy")})"
             ></div>
-            ${this.renderAttr("wind_speed")}${speed && bearing
-              ? html`(${this.renderAttr("wind_bearing")})`
-              : ""}
+            ${this.renderAttr("wind_speed")}${
+              speed && bearing ? html`(${this.renderAttr("wind_bearing")})` : ""
+            }
           </span>
         `
       : "";
@@ -378,28 +381,36 @@ export class SimpleWeatherCard extends LitElement {
           return html`
             <div class="weather__forecast__day">
               <span class="weather__forecast__dayname">${label}</span>
-              ${icon
-                ? html`<div
-                    class="weather__icon weather__icon--forecast"
-                    style="background-image: url(${icon})"
-                  ></div>`
-                : ""}
+              ${
+                icon
+                  ? html`<div
+                      class="weather__icon weather__icon--forecast"
+                      style="background-image: url(${icon})"
+                    ></div>`
+                  : ""
+              }
               <span
                 class="weather__forecast__temp weather__forecast__temp--high"
               >
-                ${entry.temperature !== undefined
-                  ? entry.temperature.toFixed(1)
-                  : "--"}${tempUnit}
+                ${
+                  entry.temperature !== undefined
+                    ? entry.temperature.toFixed(1)
+                    : "--"
+                }${tempUnit}
               </span>
-              ${!isHourly
-                ? html`<span
-                    class="weather__forecast__temp weather__forecast__temp--low"
-                  >
-                    ${entry.templow !== undefined
-                      ? entry.templow.toFixed(1)
-                      : "--"}${tempUnit}
-                  </span>`
-                : ""}
+              ${
+                !isHourly
+                  ? html`<span
+                      class="weather__forecast__temp weather__forecast__temp--low"
+                    >
+                      ${
+                        entry.templow !== undefined
+                          ? entry.templow.toFixed(1)
+                          : "--"
+                      }${tempUnit}
+                    </span>`
+                  : ""
+              }
             </div>
           `;
         })}
