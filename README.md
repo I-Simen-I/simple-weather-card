@@ -73,6 +73,7 @@ If you're migrating from the [original repository](https://github.com/kalkih/sim
 | wind_speed                    | Current wind speed                                    | v0.7.0 |
 | wind_bearing                  | Current wind direction                                | v0.7.0 |
 | pressure                      | Current air pressure                                  | v0.7.0 |
+| apparent_temperature          | Current apparent (feels like) temperature             | v2.9.0 |
 
 #### Backdrop object options
 
@@ -89,7 +90,7 @@ See [Backdrop example](#backdrop-example) for example usage.
 #### Custom option array
 
 See [Custom example](#custom-sensors-example) for example usage.
-Possible entries are: `temp`, `high`, `low`, `state`, `precipitation`, `humidity`, `icon-state`, `wind_speed`, `wind_bearing`, `pressure` & `precipitation_probability`.
+Possible entries are: `temp`, `apparent_temperature`, `high`, `low`, `state`, `precipitation`, `humidity`, `icon-state`, `wind_speed`, `wind_bearing`, `pressure` & `precipitation_probability`.
 
 ```yaml
 custom:

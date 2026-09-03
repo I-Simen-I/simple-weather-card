@@ -159,6 +159,10 @@ export default class WeatherEntity {
     return this.attr.temperature;
   }
 
+  get apparent_temperature(): number | undefined {
+    return this.attr.apparent_temperature;
+  }
+
   get name(): string | undefined {
     return this.attr.friendly_name;
   }
