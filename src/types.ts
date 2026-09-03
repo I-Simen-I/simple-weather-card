@@ -4,6 +4,7 @@ export interface HassEntityAttributes {
   unit_of_measurement?: string;
   temperature?: number;
   temperature_unit?: string;
+  apparent_temperature?: number;
   wind_speed?: number;
   wind_speed_unit?: string;
   wind_bearing?: number;
@@ -54,6 +55,7 @@ export interface ForecastEntry {
   condition?: string;
   temperature?: number;
   templow?: number;
+  apparent_temperature?: number;
   precipitation?: number;
   precipitation_probability?: number;
 }

@@ -22,10 +22,12 @@ const INFO_OPTIONS = [
   { value: "wind_speed", label: "Wind speed" },
   { value: "wind_bearing", label: "Wind bearing" },
   { value: "pressure", label: "Pressure" },
+  { value: "apparent_temperature", label: "Feels like" },
 ];
 
 const CUSTOM_KEYS: { key: string; label: string }[] = [
   { key: "temp", label: "Temperature" },
+  { key: "apparent_temperature", label: "Feels like" },
   { key: "high", label: "High temperature" },
   { key: "low", label: "Low temperature" },
   { key: "state", label: "Condition / state" },

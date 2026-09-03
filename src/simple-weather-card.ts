@@ -38,13 +38,14 @@ const toArray = (
   return typeof val === "string" ? [val] : val;
 };
 
-const INFO: Record<string, { icon: string; unit: string }> = {
+const INFO: Record<string, { icon?: string; unit: string }> = {
   precipitation: { icon: "rainy", unit: "precipitation" },
   precipitation_probability: { icon: "rainy", unit: "%" },
   humidity: { icon: "humidity", unit: "%" },
   wind_speed: { icon: "windy", unit: "wind_speed" },
   wind_bearing: { icon: "windy", unit: "" },
   pressure: { icon: "pressure", unit: "pressure" },
+  apparent_temperature: { unit: "temperature" },
 };
 
 @customElement("simple-weather-card")
@@ -346,12 +347,19 @@ export class SimpleWeatherCard extends LitElement {
     if (attr === "precipitation_and_probability")
       return this.renderPrecipitation();
     if (attr === "wind") return this.renderWind();
+    const { icon } = INFO[attr];
+    const value = this.custom[attr]?.state ?? this.weather?.getAttribute(attr);
+    if (value === undefined || value === "") return "";
     return html`
       <span class="weather__info__item">
-        <div
-          class="weather__icon weather__icon--small"
-          style="background-image: url(${this.weather?.getIcon(INFO[attr].icon)})"
-        ></div>
+        ${
+          icon
+            ? html`<div
+                class="weather__icon weather__icon--small"
+                style="background-image: url(${this.weather?.getIcon(icon)})"
+              ></div>`
+            : ""
+        }
         ${this.renderAttr(attr)}
       </span>
     `;
