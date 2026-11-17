@@ -1,0 +1,65 @@
+{
+  "sections": {
+    "name": "Názov",
+    "state": "Informácie o stave",
+    "primary_info": "Primárne informácie",
+    "secondary_info": "Sekundárne informácie",
+    "forecast": "Predpoveď",
+    "actions": "Akcie",
+    "backdrop": "Pozadie",
+    "icons": "Ikony",
+    "custom": "Vlastné prepísanie senzorov"
+  },
+  "fields": {
+    "entity": "Entita počasia",
+    "name": "Názov",
+    "show_name": "Zobraziť názov",
+    "state_content": "Obsah stavu",
+    "primary_info": "Primárne informácie",
+    "secondary_info": "Sekundárne informácie",
+    "show_forecast": "Zobraziť predpoveď",
+    "forecast_type": "Typ predpovede",
+    "forecast_slots": "Počet dní / hodín",
+    "tap_action": "Akcia ťuknutia",
+    "hold_action": "Akcia podržania",
+    "double_tap_action": "Akcia dvojitého ťuknutia",
+    "bg": "Zobraziť pozadie",
+    "fade": "Efekt prelínania",
+    "day": "Farba dňa",
+    "night": "Farba noci",
+    "text": "Farba textu",
+    "animated_icons": "Animované ikony"
+  },
+  "info": {
+    "state": "Poveternostné podmienky",
+    "extrema": "Nízka / Vysoká",
+    "precipitation_and_probability": "Zrážky (Množstvo / Pravdepodobnosť)",
+    "precipitation": "Zrážky",
+    "precipitation_probability": "Pravdepodobnosť zrážok",
+    "humidity": "Vlhkosť",
+    "wind": "Vietor (Rýchlosť / Smer)",
+    "wind_speed": "Rýchlosť vetra",
+    "wind_bearing": "Smer vetra",
+    "pressure": "Tlak",
+    "apparent_temperature": "Pocitová teplota"
+  },
+  "forecast_type": {
+    "daily": "Denná",
+    "hourly": "Hodinová",
+    "twice_daily": "Dvakrát denne (deň a noc)"
+  },
+  "custom": {
+    "temp": "Teplota",
+    "apparent_temperature": "Pocitová teplota",
+    "high": "Vysoká teplota",
+    "low": "Nízka teplota",
+    "state": "Podmienky / stav",
+    "icon-state": "Stav ikony",
+    "precipitation": "Zrážky",
+    "precipitation_probability": "Pravdepodobnosť zrážok",
+    "humidity": "Vlhkosť",
+    "wind_speed": "Rýchlosť vetra",
+    "wind_bearing": "Smer vetra",
+    "pressure": "Tlak"
+  }
+}

@@ -1,11 +1,12 @@
 import en from "./translations/en.json";
 import nb from "./translations/nb.json";
+import sk from "./translations/sk.json";
 import { HomeAssistant } from "./types";
 
 // To add a language, add src/translations/<language>.json with the same
 // keys as en.json and list it here. Missing keys fall back to English.
 // Nynorsk uses bokmål until it has its own translation.
-const LANGUAGES: Record<string, unknown> = { en, nb, nn: nb };
+const LANGUAGES: Record<string, unknown> = { en, nb, nn: nb, sk };
 
 const lookup = (translations: unknown, key: string): string | undefined => {
   const value = key
