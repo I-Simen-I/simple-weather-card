@@ -4,6 +4,7 @@ import { customElement, property, state } from "lit/decorators.js";
 import WeatherEntity, { getTimeZone } from "./weather";
 import getStyles from "./style";
 import { ActionType, fireAction, hasAction } from "./actions";
+import { formatNumber } from "./format";
 import {
   HomeAssistant,
   HassEntity,
@@ -29,7 +30,7 @@ const UNITS: Record<string, string> = {
   fahrenheit: "°F",
 };
 
-const hasValue = (val: unknown): boolean =>
+const hasValue = <T>(val: T | null | undefined): val is T =>
   val !== undefined && val !== null && val !== "";
 
 const HOLD_TIME = 500;
@@ -460,6 +461,13 @@ export class SimpleWeatherCard extends LitElement {
     const hour12 = use12HourClock(this.hass.locale);
     const timeZone = getTimeZone(this.hass);
     const nightLabel = this.hass.localize("ui.card.weather.night") || "Night";
+    const formatTemp = (temp: number | undefined): string =>
+      temp !== undefined
+        ? formatNumber(temp, this.hass.locale, {
+            minimumFractionDigits: 1,
+            maximumFractionDigits: 1,
+          })
+        : "--";
     const showLow =
       type === "daily" ||
       (type === "twice_daily" &&
@@ -501,22 +509,14 @@ export class SimpleWeatherCard extends LitElement {
               <span
                 class="weather__forecast__temp weather__forecast__temp--high"
               >
-                ${
-                  entry.temperature !== undefined
-                    ? entry.temperature.toFixed(1)
-                    : "--"
-                }${tempUnit}
+                ${formatTemp(entry.temperature)}${tempUnit}
               </span>
               ${
                 showLow
                   ? html`<span
                       class="weather__forecast__temp weather__forecast__temp--low"
                     >
-                      ${
-                        entry.templow !== undefined
-                          ? entry.templow.toFixed(1)
-                          : "--"
-                      }${tempUnit}
+                      ${formatTemp(entry.templow)}${tempUnit}
                     </span>`
                   : ""
               }
@@ -536,7 +536,7 @@ export class SimpleWeatherCard extends LitElement {
     const weatherValue = this.weather?.getAttribute(attr);
     const state = this.custom[attr] ? this.custom[attr].state : weatherValue;
     if (!hasValue(state)) return undefined;
-    let value = state;
+    let value = formatNumber(state, this.hass.locale);
     let unit = uom
       ? this.getUnit(this.custom[attr]?.unit ?? INFO[attr]?.unit)
       : "";

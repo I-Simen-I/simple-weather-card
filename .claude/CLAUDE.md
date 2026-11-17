@@ -122,8 +122,9 @@ translations under `site-packages/hass_frontend/static/translations/`.
 
 - `hass.locale`: `language`, `number_format`, `time_format` (12/24/language/
   system), `date_format`, `time_zone` (local/server), `first_weekday`.
-  `hass.config.time_zone` is the server's. The card doesn't use
-  `number_format` yet, so decimals always use a dot.
+  `hass.config.time_zone` is the server's. Numbers go through
+  `formatNumber` in `src/format.ts`, a copy of HA's, which follows
+  `number_format`.
 - Theme: style with HA's CSS variables (`--primary-text-color`,
   `--primary-color`, `--divider-color`, `--ha-card-*`) so themes and dark mode
   work.
