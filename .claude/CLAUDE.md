@@ -21,7 +21,8 @@ committed; every file in `.claude/rules/` is loaded automatically).
 - `test/` – Node test runner. `card.test.mjs` and `editor.test.mjs` load the
   **built** bundle in happy-dom with a fake `hass` from `helpers.mjs`, so
   `yarn build` before `yarn test`.
-- `.github/workflows/` – build (typecheck, lint, build, test, artifact),
+- `.github/workflows/` – build (typecheck, lint, formatting, build, test,
+  artifact),
   release (manual button), labeler, HACS validation.
 - `dev/` – local Home Assistant in Docker for manual testing.
 
@@ -30,7 +31,7 @@ committed; every file in `.claude/rules/` is loaded automatically).
 `yarn build`, `yarn watch`, `yarn typecheck`, `yarn lint` (max 0 warnings),
 `yarn test`, `yarn ha:up` / `ha:down` / `ha:logs` (needs Docker and a build).
 Format with `yarn prettier --write <files>`, which also aligns markdown
-tables.
+tables; CI checks every file with `yarn prettier --check .`.
 
 ## Workflow
 

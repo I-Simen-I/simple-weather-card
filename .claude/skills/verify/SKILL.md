@@ -16,8 +16,8 @@ Run the checks in order and stop at the first failure, showing its output.
    The smoke tests load the built bundle, so `yarn build` must run before
    `yarn test`.
 
-2. **Docs and config**: run `yarn prettier --check` on markdown and JSON
-   files changed on the branch (`git diff --name-only master -- '*.md' '*.json'`).
+2. **Formatting**: `yarn prettier --check .` (CI runs it too). It covers the
+   markdown, JSON and YAML files that ESLint doesn't.
 
 3. **New tests must fail against `master`.** If `test/` changed on the branch,
    build `master` in a temporary worktree and run the branch's tests
