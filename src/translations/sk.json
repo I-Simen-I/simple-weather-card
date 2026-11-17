@@ -8,7 +8,7 @@
     "actions": "Akcie",
     "backdrop": "Pozadie",
     "icons": "Ikony",
-    "custom": "Nahradiť vlastnými senzormi"
+    "custom": "Vlastné prepísanie senzorov"
   },
   "fields": {
     "entity": "Entita počasia",
@@ -20,46 +20,46 @@
     "show_forecast": "Zobraziť predpoveď",
     "forecast_type": "Typ predpovede",
     "forecast_slots": "Počet dní / hodín",
-    "tap_action": "Správanie pri klepnutí",
-    "hold_action": "Správanie pri podržaní",
-    "double_tap_action": "Správanie pri dvojitom klepnutí",
+    "tap_action": "Akcia ťuknutia",
+    "hold_action": "Akcia podržania",
+    "double_tap_action": "Akcia dvojitého ťuknutia",
     "bg": "Zobraziť pozadie",
     "fade": "Efekt prelínania",
-    "day": "Denná farba",
-    "night": "Nočná farba",
+    "day": "Farba dňa",
+    "night": "Farba noci",
     "text": "Farba textu",
     "animated_icons": "Animované ikony"
   },
   "info": {
-    "state": "Počasie",
-    "extrema": "Min. / Max.",
-    "precipitation_and_probability": "Zrážky (množstvo / pravdepodobnosť)",
+    "state": "Poveternostné podmienky",
+    "extrema": "Nízka / Vysoká",
+    "precipitation_and_probability": "Zrážky (Množstvo / Pravdepodobnosť)",
     "precipitation": "Zrážky",
     "precipitation_probability": "Pravdepodobnosť zrážok",
     "humidity": "Vlhkosť",
-    "wind": "Vietor (rýchlosť / smer)",
+    "wind": "Vietor (Rýchlosť / Smer)",
     "wind_speed": "Rýchlosť vetra",
     "wind_bearing": "Smer vetra",
-    "pressure": "Tlak vzduchu",
+    "pressure": "Tlak",
     "apparent_temperature": "Pocitová teplota"
   },
   "forecast_type": {
-    "daily": "Denne",
-    "hourly": "Hodinovo",
+    "daily": "Denná",
+    "hourly": "Hodinová",
     "twice_daily": "Dvakrát denne (deň a noc)"
   },
   "custom": {
     "temp": "Teplota",
     "apparent_temperature": "Pocitová teplota",
-    "high": "Najvyššia teplota",
-    "low": "Najnižšia teplota",
-    "state": "Počasie / stav",
+    "high": "Vysoká teplota",
+    "low": "Nízka teplota",
+    "state": "Podmienky / stav",
     "icon-state": "Stav ikony",
     "precipitation": "Zrážky",
     "precipitation_probability": "Pravdepodobnosť zrážok",
     "humidity": "Vlhkosť",
     "wind_speed": "Rýchlosť vetra",
     "wind_bearing": "Smer vetra",
-    "pressure": "Tlak vzduchu"
+    "pressure": "Tlak"
   }
 }
