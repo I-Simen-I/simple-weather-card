@@ -81,7 +81,7 @@ test("renders every info attribute", async () => {
   });
   const output = text(card);
   assert.match(output, /80 %/, "humidity");
-  assert.match(output, /1012 hPa/, "pressure");
+  assert.match(output, /1,012 hPa/, "pressure");
   assert.match(output, /SSW/, "wind bearing");
   assert.match(output, /\(SSW\)/, "no spaces inside the wind parentheses");
   card.remove();
@@ -108,6 +108,45 @@ test("uses custom sensor overrides", async () => {
   const card = await createCard({ custom: [{ temp: "sensor.outside" }] }, hass);
   assert.match(text(card), /21\.3°C/);
   card.remove();
+});
+
+test("follows the user's number format", async () => {
+  const render = async (locale, attributes = {}, states = {}, config = {}) => {
+    subscriptions.length = 0;
+    const hass = {
+      ...createHass({ [ENTITY]: weatherState(attributes), ...states }),
+      locale,
+    };
+    const card = await createCard(
+      { show_forecast: true, secondary_info: ["wind_speed"], ...config },
+      hass,
+    );
+    const output = text(card);
+    card.remove();
+    return output;
+  };
+
+  const nb = await render({ language: "nb" }, { wind_speed: 7.7222 });
+  assert.match(nb, /7,5°C/, "temperature in the language's format");
+  assert.match(nb, /7,72/, "at most two decimals, like Home Assistant");
+  assert.match(nb, /10,0°C/, "forecast temperatures");
+
+  const decimalComma = await render({
+    language: "en",
+    number_format: "decimal_comma",
+  });
+  assert.match(decimalComma, /7,5°C/, "decimal_comma");
+
+  const none = await render({ language: "nb", number_format: "none" });
+  assert.match(none, /7\.5°C/, "none");
+
+  const sensor = await render(
+    { language: "nb" },
+    {},
+    { "sensor.outside": { state: "21.30", attributes: {} } },
+    { custom: [{ temp: "sensor.outside" }] },
+  );
+  assert.match(sensor, /21,30°C/, "sensor states keep their decimals");
 });
 
 test("re-renders when the config changes", async () => {

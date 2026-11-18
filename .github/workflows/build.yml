@@ -33,6 +33,10 @@ jobs:
       - name: Lint
         run: yarn lint
 
+      # ESLint formats the code; this covers markdown, JSON and YAML too
+      - name: Check formatting
+        run: yarn prettier --check .
+
       - name: Build
         run: yarn build
 
