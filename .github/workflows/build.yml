@@ -16,13 +16,14 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - name: Enable corepack
-        run: corepack enable
-
       - name: Set up Node
         uses: actions/setup-node@v7
         with:
-          node-version: 24
+          node-version-file: .nvmrc
+
+      # Node 25 and newer don't include Corepack, which provides Yarn
+      - name: Enable corepack
+        run: npm install -g corepack && corepack enable
 
       - name: Install dependencies
         run: yarn install --immutable
