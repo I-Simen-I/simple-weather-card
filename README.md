@@ -264,6 +264,11 @@ The local test environment, the screenshots and the release process are describe
 
 Built with TypeScript, Lit 3 and webpack.
 
+## More cards
+
+- [Stack In Card](https://github.com/I-Simen-I/stack-in-card): group several cards into one card, without the borders, shadows and gaps between them.
+- [HA Scene Card](https://github.com/I-Simen-I/ha-scene-card): a row of buttons that shows which scenes are active, with the active scene in color. Works for switches, lights and helpers too.
+
 ## License
 
 [MIT](LICENSE)
